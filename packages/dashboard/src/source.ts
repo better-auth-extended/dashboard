@@ -293,7 +293,6 @@ export const createSource = <
 		if (options?.language) {
 			if (isTranslatableString(title)) {
 				title = title.translateTo(options.language, options.vars?.title);
-				console.log({ title });
 			}
 			if (isTranslatableString(description)) {
 				description = description.translateTo(

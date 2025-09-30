@@ -50,8 +50,6 @@ export const UserTable = () => {
 					},
 				});
 
-				console.log(result);
-
 				if (result.data?.users) {
 					setData(result.data);
 				}

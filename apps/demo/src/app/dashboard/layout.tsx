@@ -6,11 +6,7 @@ import * as components from "@/components/ui";
 
 export default function Layout(props: LayoutProps<"/dashboard">) {
 	return (
-		<DashboardLayout
-			source={source}
-			components={components}
-			onLanguageChange={(lang) => console.log({ lang })}
-		>
+		<DashboardLayout source={source} components={components}>
 			{props.children}
 		</DashboardLayout>
 	);
