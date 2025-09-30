@@ -11,7 +11,7 @@ import type {
 import { groupPages } from "./utils/group-pages";
 import type { adminClient } from "better-auth/client/plugins";
 import type { admin } from "better-auth/plugins/admin";
-import { lazy } from "react";
+import { lazy, type ComponentType } from "react";
 import type {
 	dashboardClientPlugin,
 	DashboardPlugin,
@@ -40,6 +40,8 @@ type NormalizeTranslations<T extends Plugin["translations"]> = {
 const defaultTranslations = {
 	"ui.signOut": "Sign out",
 	"ui.languageSwitch.aria-label": "Change language",
+	"ui.languageSwitch.noResults": "No results",
+	"ui.languageSwitch.placeholder": "Search language...",
 	"home.title": "Home",
 	"home.welcome": "Welcome to the dashboard",
 } as const satisfies PluginTranslations;
@@ -47,6 +49,7 @@ const defaultTranslations = {
 type I18nConfig<P extends Plugin[]> = {
 	[lang: string]: {
 		displayName?: string;
+		icon?: string | ComponentType<{ className?: string }>;
 		translations?: {
 			[K in keyof UnionToIntersection<
 				NormalizeTranslations<
@@ -157,16 +160,16 @@ export const createSource = <
 	>;
 	const languages = Object.entries(options.i18n ?? {}).reduce(
 		(acc, value) => {
-			const [lang, { displayName }] = value;
+			const [lang, { translations, ...rest }] = value;
 			return [
 				...acc,
 				{
 					id: lang,
-					displayName,
+					...rest,
 				},
 			];
 		},
-		[] as { id: string; displayName?: string }[],
+		[] as ({ id: string } & Omit<I18nConfig<any>[string], "translations">)[],
 	);
 	type TOptions<
 		K extends keyof UnionToIntersection<

@@ -10,13 +10,18 @@ export const source = createSource({
 	i18n: {
 		english: {
 			displayName: "English",
+			icon: "\uD83C\uDDFA\uD83C\uDDF8",
 		},
 		german: {
 			displayName: "Deutsch",
+			icon: "\uD83C\uDDE9\uD83C\uDDEA",
 			translations: {
+				"ui.signOut": "Abmelden",
+				"ui.languageSwitch.aria-label": "Sprache ändern",
+				"ui.languageSwitch.noResults": "Keine Resultate",
+				"ui.languageSwitch.placeholder": "Sprache suchen...",
 				"home.title": "Übersicht",
 				"home.welcome": "Willkommen im Dashboard",
-				"ui.signOut": "Abmelden",
 				"users.title": "Benutzer",
 				"users.table.colName.user": "Benutzer",
 				"users.table.colName.email": "E-Mail",

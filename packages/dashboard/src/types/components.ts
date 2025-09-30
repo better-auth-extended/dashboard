@@ -32,44 +32,22 @@ export interface ButtonProps
 
 type Button = React.ComponentType<ButtonProps>;
 
-type Separator = React.ComponentType<
-	React.ComponentProps<typeof SeparatorPrimitive.Root>
->;
+type Separator = typeof SeparatorPrimitive.Root;
 
-type Label = React.ComponentType<
-	React.ComponentProps<typeof LabelPrimitive.Root>
->;
+type Label = typeof LabelPrimitive.Root;
 
-type Sheet = React.ComponentType<
-	React.ComponentProps<typeof SheetPrimitive.Trigger>
->;
-type SheetClose = React.ComponentType<
-	React.ComponentProps<typeof SheetPrimitive.Close>
->;
-type SheetContent = React.ComponentType<
-	React.ComponentProps<typeof SheetPrimitive.Content>
->;
+type Sheet = typeof SheetPrimitive.Trigger;
+type SheetClose = typeof SheetPrimitive.Close;
+type SheetContent = typeof SheetPrimitive.Content;
 type SheetHeader = React.ComponentType<React.ComponentProps<"div">>;
 type SheetFooter = React.ComponentType<React.ComponentProps<"div">>;
-type SheetTitle = React.ComponentType<
-	React.ComponentProps<typeof SheetPrimitive.Title>
->;
-type SheetDescription = React.ComponentType<
-	React.ComponentProps<typeof SheetPrimitive.Description>
->;
+type SheetTitle = typeof SheetPrimitive.Title;
+type SheetDescription = typeof SheetPrimitive.Description;
 
-type TooltipProvider = React.ComponentType<
-	React.ComponentProps<typeof TooltipPrimitive.Provider>
->;
-type Tooltip = React.ComponentType<
-	React.ComponentProps<typeof TooltipPrimitive.Root>
->;
-type TooltipTrigger = React.ComponentType<
-	React.ComponentProps<typeof TooltipPrimitive.Trigger>
->;
-type TooltipContent = React.ComponentType<
-	React.ComponentProps<typeof TooltipPrimitive.Content>
->;
+type TooltipProvider = typeof TooltipPrimitive.Provider;
+type Tooltip = typeof TooltipPrimitive.Root;
+type TooltipTrigger = typeof TooltipPrimitive.Trigger;
+type TooltipContent = typeof TooltipPrimitive.Content;
 
 type Skeleton = React.ComponentType<React.ComponentProps<"div">>;
 
@@ -134,73 +112,45 @@ type SidebarMenuSubButton = React.ComponentType<
 	}
 >;
 
-type Avatar = React.ComponentType<
-	React.ComponentProps<typeof AvatarPrimitive.Root>
->;
-type AvatarImage = React.ComponentType<
-	React.ComponentProps<typeof AvatarPrimitive.Image>
->;
-type AvatarFallback = React.ComponentType<
-	React.ComponentProps<typeof AvatarPrimitive.Fallback>
->;
+type Avatar = typeof AvatarPrimitive.Root;
+type AvatarImage = typeof AvatarPrimitive.Image;
+type AvatarFallback = typeof AvatarPrimitive.Fallback;
 
-type DropdownMenu = React.ComponentType<
-	React.ComponentProps<typeof DropdownMenuPrimitive.Root>
->;
+type DropdownMenu = typeof DropdownMenuPrimitive.Root;
 type DropdownMenuTrigger = React.ComponentType<
 	React.ComponentProps<typeof DropdownMenuPrimitive.Trigger>
 >;
-type DropdownMenuContent = React.ComponentType<
-	React.ComponentProps<typeof DropdownMenuPrimitive.Content>
->;
-type DropdownMenuGroup = React.ComponentType<
-	React.ComponentProps<typeof DropdownMenuPrimitive.Group>
->;
+type DropdownMenuContent = typeof DropdownMenuPrimitive.Content;
+type DropdownMenuGroup = typeof DropdownMenuPrimitive.Group;
 type DropdownMenuItem = React.ComponentType<
 	React.ComponentProps<typeof DropdownMenuPrimitive.Item> & {
 		inset?: boolean;
 		variant?: "default" | "destructive";
 	}
 >;
-type DropdownMenuCheckboxItem = React.ComponentType<
-	React.ComponentProps<typeof DropdownMenuPrimitive.CheckboxItem>
->;
+type DropdownMenuCheckboxItem = typeof DropdownMenuPrimitive.CheckboxItem;
 type DropdownMenuRadioGroup = React.ComponentType<
 	React.ComponentProps<typeof DropdownMenuPrimitive.RadioGroup>
 >;
-type DropdownMenuRadioItem = React.ComponentType<
-	React.ComponentProps<typeof DropdownMenuPrimitive.RadioItem>
->;
+type DropdownMenuRadioItem = typeof DropdownMenuPrimitive.RadioItem;
 type DropdownMenuLabel = React.ComponentType<
 	React.ComponentProps<typeof DropdownMenuPrimitive.Label> & {
 		inset?: boolean;
 	}
 >;
-type DropdownMenuSeparator = React.ComponentType<
-	React.ComponentProps<typeof DropdownMenuPrimitive.Separator>
->;
+type DropdownMenuSeparator = typeof DropdownMenuPrimitive.Separator;
 type DropdownMenuShortcut = React.ComponentType<React.ComponentProps<"span">>;
-type DropdownMenuSub = React.ComponentType<
-	React.ComponentProps<typeof DropdownMenuPrimitive.Sub>
->;
+type DropdownMenuSub = typeof DropdownMenuPrimitive.Sub;
 type DropdownMenuSubTrigger = React.ComponentType<
 	React.ComponentProps<typeof DropdownMenuPrimitive.SubTrigger> & {
 		inset?: boolean;
 	}
 >;
-type DropdownMenuSubContent = React.ComponentType<
-	React.ComponentProps<typeof DropdownMenuPrimitive.SubContent>
->;
+type DropdownMenuSubContent = typeof DropdownMenuPrimitive.SubContent;
 
-type Collapsible = React.ComponentType<
-	React.ComponentProps<typeof CollapsiblePrimitive.Root>
->;
-type CollapsibleTrigger = React.ComponentType<
-	React.ComponentProps<typeof CollapsiblePrimitive.CollapsibleTrigger>
->;
-type CollapsibleContent = React.ComponentType<
-	React.ComponentProps<typeof CollapsiblePrimitive.CollapsibleContent>
->;
+type Collapsible = typeof CollapsiblePrimitive.Root;
+type CollapsibleTrigger = typeof CollapsiblePrimitive.CollapsibleTrigger;
+type CollapsibleContent = typeof CollapsiblePrimitive.CollapsibleContent;
 
 type Breadcrumb = React.ComponentType<React.ComponentProps<"nav">>;
 type BreadcrumbList = React.ComponentType<React.ComponentProps<"ol">>;
@@ -220,9 +170,7 @@ type Badge = React.ComponentType<
 	}
 >;
 
-type Checkbox = React.ComponentType<
-	React.ComponentProps<typeof CheckboxPrimitive.Root>
->;
+type Checkbox = typeof CheckboxPrimitive.Root;
 
 type Table = React.ComponentType<React.ComponentProps<"table">>;
 type TableHeader = React.ComponentType<React.ComponentProps<"thead">>;
@@ -231,6 +179,43 @@ type TableFooter = React.ComponentType<React.ComponentProps<"tfoot">>;
 type TableRow = React.ComponentType<React.ComponentProps<"tr">>;
 type TableHead = React.ComponentType<React.ComponentProps<"th">>;
 type TableCell = React.ComponentType<React.ComponentProps<"td">>;
+
+type Dialog = typeof DialogPrimitive.Root;
+type DialogTrigger = typeof DialogPrimitive.Trigger;
+type DialogPortal = typeof DialogPrimitive.Portal;
+type DialogClose = typeof DialogPrimitive.Close;
+type DialogOverlay = typeof DialogPrimitive.Overlay;
+type DialogContent = React.ComponentType<
+	React.ComponentProps<typeof DialogPrimitive.Content> & {
+		showCloseButton?: boolean;
+	}
+>;
+type DialogHeader = React.ComponentType<React.ComponentProps<"div">>;
+type DialogFooter = React.ComponentType<React.ComponentProps<"div">>;
+type DialogTitle = typeof DialogPrimitive.Title;
+type DialogDescription = typeof DialogPrimitive.Description;
+
+type Command = typeof CommandPrimitive;
+type CommandDialog = React.ComponentType<
+	React.ComponentProps<Dialog> & {
+		title?: string;
+		description?: string;
+		className?: string;
+		showCloseButton?: boolean;
+	}
+>;
+type CommandInput = typeof CommandPrimitive.Input;
+type CommandList = typeof CommandPrimitive.List;
+type CommandEmpty = typeof CommandPrimitive.Empty;
+type CommandGroup = typeof CommandPrimitive.Group;
+type CommandSeparator = typeof CommandPrimitive.Separator;
+type CommandItem = typeof CommandPrimitive.Item;
+type CommandShortcut = React.ComponentType<React.ComponentProps<"span">>;
+
+type Popover = typeof PopoverPrimitive.Root;
+type PopoverTrigger = typeof PopoverPrimitive.Trigger;
+type PopoverContent = typeof PopoverPrimitive.Content;
+type PopoverAnchor = typeof PopoverPrimitive.Anchor;
 
 export type Components = {
 	Button: Button;
@@ -302,4 +287,27 @@ export type Components = {
 	TableRow: TableRow;
 	TableHead: TableHead;
 	TableCell: TableCell;
+	Dialog: Dialog;
+	DialogTrigger: DialogTrigger;
+	DialogPortal: DialogPortal;
+	DialogClose: DialogClose;
+	DialogOverlay: DialogOverlay;
+	DialogContent: DialogContent;
+	DialogHeader: DialogHeader;
+	DialogFooter: DialogFooter;
+	DialogTitle: DialogTitle;
+	DialogDescription: DialogDescription;
+	Command: Command;
+	CommandDialog: CommandDialog;
+	CommandInput: CommandInput;
+	CommandList: CommandList;
+	CommandEmpty: CommandEmpty;
+	CommandGroup: CommandGroup;
+	CommandSeparator: CommandSeparator;
+	CommandItem: CommandItem;
+	CommandShortcut: CommandShortcut;
+	Popover: Popover;
+	PopoverTrigger: PopoverTrigger;
+	PopoverContent: PopoverContent;
+	PopoverAnchor: PopoverAnchor;
 };
