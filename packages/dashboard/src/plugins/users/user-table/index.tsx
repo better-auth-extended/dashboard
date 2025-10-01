@@ -7,7 +7,7 @@ import {
 	useReactTable,
 } from "@tanstack/react-table";
 import { columns } from "./columns";
-import { useDashboard } from "../../../dashboard";
+import { useDashboard, useDashboardPage } from "../../../dashboard";
 import { DataTable } from "./data-table";
 import {
 	useCallback,
@@ -17,9 +17,11 @@ import {
 	useTransition,
 } from "react";
 import type { UserWithRole } from "better-auth/plugins/admin";
+import { DataTableToolbar } from "./data-table-toolbar";
 
 export const UserTable = () => {
 	const { authClient, components, t } = useDashboard();
+	const { session } = useDashboardPage();
 	const [pagination, setPagination] = useState<PaginationState>({
 		pageIndex: 0,
 		pageSize: 20,
@@ -78,6 +80,7 @@ export const UserTable = () => {
 		state: {
 			pagination,
 		},
+		enableRowSelection: (row) => row.original.id !== session.user.id,
 		onPaginationChange: setPagination,
 		getCoreRowModel: getCoreRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
@@ -85,6 +88,9 @@ export const UserTable = () => {
 
 	return (
 		<div className="space-y-4">
+			<DataTableToolbar
+				table={table}
+			/>
 			<DataTable table={table} />
 		</div>
 	);

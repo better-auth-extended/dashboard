@@ -305,6 +305,33 @@ type PopoverAnchor = React.ComponentType<
 	React.ComponentProps<typeof PopoverPrimitive.Anchor>
 >;
 
+type Select = React.ComponentType<
+	React.ComponentProps<typeof SelectPrimitive.Root>
+>;
+type SelectGroup = React.ComponentType<
+	React.ComponentProps<typeof SelectPrimitive.Group>
+>;
+type SelectValue = React.ComponentType<
+	React.ComponentProps<typeof SelectPrimitive.Value>
+>;
+type SelectTrigger = React.ComponentType<
+	React.ComponentProps<typeof SelectPrimitive.Trigger> & {
+		size?: "sm" | "default";
+	}
+>;
+type SelectContent = React.ComponentType<
+	React.ComponentProps<typeof SelectPrimitive.Content>
+>;
+type SelectLabel = React.ComponentType<
+	React.ComponentProps<typeof SelectPrimitive.Label>
+>;
+type SelectItem = React.ComponentType<
+	React.ComponentProps<typeof SelectPrimitive.Item>
+>;
+type SelectSeparator = React.ComponentType<
+	React.ComponentProps<typeof SelectPrimitive.Separator>
+>;
+
 export type Components = {
 	Button: Button;
 	Label: Label;
@@ -398,4 +425,12 @@ export type Components = {
 	PopoverTrigger: PopoverTrigger;
 	PopoverContent: PopoverContent;
 	PopoverAnchor: PopoverAnchor;
+	Select: Select;
+	SelectGroup: SelectGroup;
+	SelectValue: SelectValue;
+	SelectTrigger: SelectTrigger;
+	SelectContent: SelectContent;
+	SelectLabel: SelectLabel;
+	SelectItem: SelectItem;
+	SelectSeparator: SelectSeparator;
 };

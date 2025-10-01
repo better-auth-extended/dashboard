@@ -3,7 +3,9 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import type { UserWithRole } from "better-auth/plugins/admin";
 import type { Components } from "../../../types/components";
-import type { DashboardContext } from "../../../dashboard";
+import { useDashboard, type DashboardContext } from "../../../dashboard";
+import { UserImage } from "../../../ui/user-image";
+import { DataTableRowActions } from "./data-table-row-actions";
 
 type ColumnsFn = (data: {
 	components: Components;
@@ -46,6 +48,9 @@ export const columns: ColumnsFn = ({ components, t }) => {
 				name,
 			}),
 			header: t("users.table.colName.user"),
+			meta: {
+				displayName: t("users.table.colName.user"),
+			},
 			filterFn: (row, _id, filterValue) => {
 				return row.original.name
 					.toLowerCase()
@@ -59,7 +64,13 @@ export const columns: ColumnsFn = ({ components, t }) => {
 
 				return (
 					<div className="truncate flex gap-2 items-center justify-start">
-						{/* TODO: pfp */}
+						<UserImage
+							user={{
+								name,
+								image
+							}}
+							className="size-7"
+						/>
 						<span>{name}</span>
 					</div>
 				);
@@ -75,6 +86,9 @@ export const columns: ColumnsFn = ({ components, t }) => {
 				emailVerified,
 			}),
 			header: t("users.table.colName.email"),
+			meta: {
+				displayName: t("users.table.colName.email"),
+			},
 			cell: ({ getValue }) => {
 				const { email, emailVerified } = getValue<{
 					email: string;
@@ -92,11 +106,26 @@ export const columns: ColumnsFn = ({ components, t }) => {
 		{
 			accessorKey: "role",
 			header: t("users.table.colName.role"),
+			meta: {
+				displayName: t("users.table.colName.role"),
+			},
 			cell: ({ getValue }) => {
+				const { source, t, icons } = useDashboard();
+				const { Tag } = icons;
+				const role = getValue<string>()
+				const config = source.roles[role];
+
+				const Icon = config?.icon ?? Tag; 
+
 				return (
-					<div className="flex items-center">
-						<span className="capitalize">{getValue<string>()}</span>
-					</div>
+					<Badge variant="outline" className="flex items-center rounded-sm">
+						<Icon className="-ms-0.5 mr-0.5 size-4" />
+						<span>
+							{t("roleName", {
+								role,
+							})}
+						</span>
+					</Badge>
 				);
 			},
 			size: 100,
@@ -104,6 +133,9 @@ export const columns: ColumnsFn = ({ components, t }) => {
 		{
 			accessorKey: "createdAt",
 			header: t("users.table.colName.createdAt"),
+			meta: {
+				displayName: t("users.table.colName.createdAt"),
+			},
 			cell: ({ getValue }) => {
 				return (
 					<div className="flex items-center">
@@ -112,5 +144,14 @@ export const columns: ColumnsFn = ({ components, t }) => {
 				);
 			},
 		},
+		{
+			id: "actions",
+			cell: ({ row }) => (
+				<DataTableRowActions row={row} />
+			),
+			enableHiding: false,
+			enableSorting: false,
+			size: 30
+		}
 	];
 };

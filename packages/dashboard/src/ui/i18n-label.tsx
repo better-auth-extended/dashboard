@@ -3,7 +3,7 @@
 import { useDashboard } from "../dashboard";
 
 export type I18nLabelProps = {
-	vars?: Record<string, string>;
+	vars?: Record<string, string | number | null | undefined>;
 } & (
 	| {
 			label: string;

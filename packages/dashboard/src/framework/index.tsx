@@ -22,6 +22,7 @@ export interface Router {
 export type Framework = () => {
 	usePathname: () => string;
 	useParams: () => Record<string, string | string[]>;
+	useSearchParams: () => URLSearchParams;
 	useRouter: () => Router;
 
 	Link?: React.ComponentType<LinkProps>;
@@ -39,6 +40,7 @@ export function FrameworkProvider({
 	useRouter,
 	useParams,
 	usePathname,
+	useSearchParams,
 	children,
 }: React.PropsWithChildren<ReturnType<Framework>>) {
 	const framework = React.useMemo(
@@ -46,10 +48,11 @@ export function FrameworkProvider({
 			usePathname,
 			useRouter,
 			useParams,
+			useSearchParams,
 			Link,
 			Image,
 		}),
-		[usePathname, useRouter, useParams, Link, Image],
+		[usePathname, useRouter, useParams, useSearchParams, Link, Image],
 	);
 
 	return (
@@ -69,6 +72,10 @@ export function useRouter() {
 
 export function useParams() {
 	return FrameworkContext.use().useParams();
+}
+
+export function useSearchParams() {
+	return FrameworkContext.use().useSearchParams();
 }
 
 export function Image(props: ImageProps) {

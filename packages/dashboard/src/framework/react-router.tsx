@@ -5,6 +5,7 @@ import {
 	useLocation,
 	useNavigate,
 	useParams,
+	useSearchParams,
 	useRevalidator,
 } from "react-router";
 
@@ -15,6 +16,9 @@ export const reactRouterProvider = (() => {
 		},
 		useParams() {
 			return useParams() as Record<string, string | string[]>;
+		},
+		useSearchParams() {
+			return useSearchParams()[0];
 		},
 		useRouter() {
 			const navigate = useNavigate();

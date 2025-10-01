@@ -39,5 +39,10 @@ export const tanstackProvider = (() => {
 		useParams() {
 			return useParams({ strict: false });
 		},
+		useSearchParams() {
+			const { state } = useRouter();
+
+			return new URLSearchParams(state.location.searchStr);
+		},
 	};
 }) satisfies Framework;

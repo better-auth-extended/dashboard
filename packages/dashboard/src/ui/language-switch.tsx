@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDashboard } from "../dashboard";
+import { cn } from "../utils/cn";
 
 export const LanguageSwitch = () => {
 	const { components, icons, source, t, language, setLanguage } =
@@ -64,7 +65,12 @@ export const LanguageSwitch = () => {
 										))}
 									{lang.displayName ?? lang.id}
 									<Check
-										className={`ml-auto ${(language ?? source.options.defaultLanguage) === lang.id ? "opacity-100" : "opacity-0"}`}
+										className={cn(
+											"ml-auto",
+											(language ?? source.options.defaultLanguage) === lang.id
+												? "opacity-100"
+												: "opacity-0",
+										)}
 									/>
 								</CommandItem>
 							))}

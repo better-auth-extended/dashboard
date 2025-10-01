@@ -50,11 +50,10 @@ export type DashboardContext = {
 	source: Source;
 	components: Components;
 	icons: Icons;
-	adminRoles: string[];
 	authClient: Source["authClient"];
 	language: string | undefined;
 	setLanguage: React.Dispatch<React.SetStateAction<string | undefined>>;
-	t: (key: string, vars?: Record<string, string>) => string;
+	t: (key: string, vars?: Record<string, string | number | null | undefined>) => string;
 	translate: (value: string | TranslatableString) => string;
 };
 
@@ -78,7 +77,7 @@ export type DashboardProps = {
 
 export const Dashboard = memo(
 	<O extends DashboardProps>({ slugs, session: prefetchedSession }: O) => {
-		const { authClient, source, adminRoles } = useDashboard();
+		const { authClient, source } = useDashboard();
 		// TODO: Skip initial fetch when prefetchedSession is provided?
 		const session = authClient.useSession().data ?? prefetchedSession;
 		const router = useRouter();
@@ -86,11 +85,11 @@ export const Dashboard = memo(
 		const page = useMemo(() => source.getPage(slugs), [source, slugs]);
 
 		useEffect(() => {
-			if (!session?.user.role || !adminRoles.includes(session.user.role)) {
+			if (!session?.user.role || !Object.keys(source.adminRoles).includes(session.user.role)) {
 				// TODO: Get from options
 				router.push("/sign-in");
 			}
-		}, [session, adminRoles, router]);
+		}, [session, source.adminRoles, router]);
 
 		if (!page) {
 			throw new Error("Page not found");
@@ -136,7 +135,7 @@ export const DashboardLayout = memo(
 		}, [language]);
 
 		const t = useCallback(
-			(key: string, vars?: Record<string, string>) => {
+			(key: string, vars?: Record<string, string | number | null | undefined>) => {
 				const res = source
 					.t(key, {
 						language,
@@ -170,7 +169,6 @@ export const DashboardLayout = memo(
 						...defaultIcons,
 						...icons,
 					},
-					adminRoles: source.adminRoles,
 					authClient: source.authClient,
 					language,
 					setLanguage,
@@ -182,7 +180,6 @@ export const DashboardLayout = memo(
 				source,
 				components,
 				icons,
-				source.adminRoles,
 				source.authClient,
 				language,
 				t,

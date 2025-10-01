@@ -18,6 +18,7 @@ export type PluginPage = (
 			group?: string;
 	  }
 ) & {
+	hidden?: boolean;
 	title: string | TranslatableString;
 	description?: string | TranslatableString;
 	slug: string;
@@ -28,7 +29,7 @@ export type PluginRoutesCtx = {
 	t: (
 		key: string,
 		opts?: {
-			vars?: Record<string, string>;
+			vars?: Record<string, string | number | null | undefined>;
 			language?: string;
 		},
 	) => string;
@@ -39,7 +40,11 @@ export type PluginTranslations = {
 		| string
 		| {
 				vars: LiteralString[];
-				fallbackValue: string | ((vars: Record<string, string>) => string);
+				fallbackValue:
+					| string
+					| ((
+							vars: Record<string, string | number | null | undefined>,
+					  ) => string);
 		  };
 };
 

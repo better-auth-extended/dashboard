@@ -11,11 +11,14 @@ import type {
 import { groupPages } from "./utils/group-pages";
 import type { adminClient } from "better-auth/client/plugins";
 import type { admin } from "better-auth/plugins/admin";
-import { lazy, type ComponentType } from "react";
+import React, { lazy, type ComponentType } from "react";
 import type {
 	dashboardClientPlugin,
 	DashboardPlugin,
 } from "./dashboard-plugin";
+import { defaultIcons } from "./utils/icons";
+
+// TODO: move types
 
 export type Slugs = string | string[] | undefined | null;
 
@@ -28,7 +31,9 @@ type NormalizeTranslations<T extends Plugin["translations"]> = {
 					vars: infer V extends LiteralString[];
 					fallbackValue: infer F extends
 						| string
-						| ((vars: Record<string, string>) => string);
+						| ((
+								vars: Record<string, string | number | null | undefined>,
+						  ) => string);
 				}
 			? {
 					vars: V;
@@ -38,10 +43,19 @@ type NormalizeTranslations<T extends Plugin["translations"]> = {
 };
 
 const defaultTranslations = {
+	roleName: {
+		vars: ["role"],
+		fallbackValue: ({ role }) => {
+			const value = `${role}`;
+
+			return value.charAt(0).toUpperCase() + value.slice(1);
+		},
+	},
 	"ui.signOut": "Sign out",
 	"ui.languageSwitch.aria-label": "Change language",
 	"ui.languageSwitch.noResults": "No results",
-	"ui.languageSwitch.placeholder": "Search language...",
+	"ui.languageSwitch.placeholder": "Language",
+	"ui.openMenu.aria-label": "Open menu",
 	"home.title": "Home",
 	"home.welcome": "Welcome to the dashboard",
 } as const satisfies PluginTranslations;
@@ -60,9 +74,20 @@ type I18nConfig<P extends Plugin[]> = {
 					P[number]["translations"] | typeof defaultTranslations
 				>
 			>[K] extends { vars: infer V extends LiteralString[] }
-				? string | ((vars: Record<V[number], string>) => string)
+				?
+						| string
+						| ((
+								vars: Record<V[number], string | number | null | undefined>,
+						  ) => string)
 				: string;
 		};
+	};
+};
+
+export type RoleMap = {
+	[role: string]: {
+		icon?: React.ComponentType<{ className?: string }>;
+		isAdminRole?: boolean;
 	};
 };
 
@@ -80,9 +105,25 @@ export type SourceOptions<P extends Plugin[], T extends I18nConfig<P>> = {
 		}>
 	>;
 	/**
+	 * @default "user"
+	 */
+	defaultRole?: string;
+	/**
 	 * @default ["admin"]
 	 */
 	adminRoles?: string[];
+	/**
+	 * @default
+	 * ```ts
+	 * {
+	 * 	user: {},
+	 * 	admin: {
+	 * 		isAdminRole: true,
+	 * 	},
+	 * }
+	 * ```
+	 */
+	roles?: RoleMap;
 	plugins?: P;
 	i18n?: T;
 	defaultLanguage?: keyof T & string;
@@ -108,7 +149,7 @@ export type TranslatableString = String & {
 	translateTo: (
 		lang: string,
 		// TODO: infer
-		vars?: Record<string, string>,
+		vars?: Record<string, string | number | null | undefined>,
 	) => string;
 };
 
@@ -123,7 +164,18 @@ export const createSource = <
 	},
 ) => {
 	const { basePath = "/dashboard", plugins = [] } = options ?? {};
-	const adminRoles = options.adminRoles ?? ["admin"];
+	const roles: RoleMap = options.roles ?? {
+		user: {
+			icon: defaultIcons.User,
+		},
+		admin: {
+			icon: defaultIcons.ShieldUser,
+			isAdminRole: true,
+		},
+	};
+	const adminRoles = Object.fromEntries(
+		Object.entries(roles).filter(([_role, config]) => !!config.isAdminRole),
+	);
 	const fallbackTranslations = [
 		defaultTranslations,
 		...plugins.map(({ translations }) => translations ?? {}),
@@ -142,7 +194,8 @@ export const createSource = <
 		};
 	}, {} as any) as Record<
 		string,
-		string | ((vars: Record<string, string>) => string)
+		| string
+		| ((vars: Record<string, string | number | null | undefined>) => string)
 	>;
 	const translations = Object.fromEntries(
 		Object.entries(options.i18n ?? {}).map(([lang, config]) => {
@@ -156,7 +209,11 @@ export const createSource = <
 		}),
 	) as Record<
 		string,
-		Record<string, string | ((vars: Record<string, string>) => string)>
+		Record<
+			string,
+			| string
+			| ((vars: Record<string, string | number | null | undefined>) => string)
+		>
 	>;
 	const languages = Object.entries(options.i18n ?? {}).reduce(
 		(acc, value) => {
@@ -181,9 +238,9 @@ export const createSource = <
 		NormalizeTranslations<P[number]["translations"]>
 	>[K] extends { vars: infer V extends readonly string[] }
 		? string[] extends V
-			? { vars?: Record<string, string> }
-			: { vars: Record<V[number], string> }
-		: { vars?: Record<string, string> });
+			? { vars?: Record<string, string | number | null | undefined> }
+			: { vars: Record<V[number], string | number | null | undefined> }
+		: { vars?: Record<string, string | number | null | undefined> });
 	const t = <
 		K extends keyof UnionToIntersection<
 			NormalizeTranslations<P[number]["translations"]>
@@ -216,7 +273,7 @@ export const createSource = <
 
 		withTranslateTo.translateTo = (
 			lang: string,
-			vars?: Record<string, string>,
+			vars?: Record<string, string | number | null | undefined>,
 		) => {
 			let l: any = translations[lang]?.[key] ?? fallbackTranslations[key];
 
@@ -273,8 +330,8 @@ export const createSource = <
 		options?: {
 			language?: string;
 			vars?: {
-				title?: Record<string, string>;
-				description?: Record<string, string>;
+				title?: Record<string, string | number | null | undefined>;
+				description?: Record<string, string | number | null | undefined>;
 			};
 		},
 	) => {
@@ -323,6 +380,7 @@ export const createSource = <
 		getPage,
 		routes,
 		groupedPages,
+		roles,
 		adminRoles,
 		// nextjs
 		prefetch: async (
@@ -352,7 +410,16 @@ export const createSource = <
 				throw redirect("/sign-in");
 			}
 
-			if (!session?.user.role || !adminRoles.includes(session.user.role)) {
+			const userRoles = (
+				session.user.role ||
+				options.defaultRole ||
+				"user"
+			).split(",");
+
+			if (
+				!session.user.role ||
+				!Object.keys(adminRoles).some((role) => userRoles.includes(role))
+			) {
 				// TODO: Show forbidden page
 				throw redirect("/sign-in");
 			}
@@ -386,9 +453,15 @@ export const createSource = <
 				throw redirect("/sign-in");
 			}
 
+			const userRoles = (
+				session.data.user.role ||
+				options.defaultRole ||
+				"user"
+			).split(",");
+
 			if (
 				!session.data.user.role ||
-				!adminRoles.includes(session.data.user.role)
+				!Object.keys(adminRoles).some((role) => userRoles.includes(role))
 			) {
 				// TODO: Show forbidden page
 				throw redirect("/sign-in");
