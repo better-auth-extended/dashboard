@@ -26,10 +26,6 @@ import { getCroppedImg, type Area } from "../../../utils/cropper";
 import { cn } from "../../../utils/cn";
 import { UserImage } from "../../../ui/user-image";
 
-export type EditUserDialogProps = SharedDialogProps & {
-	currentRow: UserWithRole;
-};
-
 const editUserSchema = z.object({
 	image: z.union([z.url(), z.base64url()]),
 	name: z.string().min(2).max(128),
@@ -91,7 +87,7 @@ const EditUserContent = ({
 
 	return (
 		<div
-			className="px-4 py-6 space-y-4 relative"
+			className="p-6 space-y-4 relative"
 			onDragEnter={handleDragEnter}
 			onDragLeave={handleDragLeave}
 			onDragOver={handleDragOver}
@@ -481,6 +477,10 @@ const EditUserDialogContext = createContext<EditUserDialogContextType>(
 	null!,
 );
 
+export type EditUserDialogProps = SharedDialogProps & {
+	currentRow: UserWithRole;
+};
+
 export const EditUserDialog = ({
 	open,
 	onOpenChange,
@@ -577,7 +577,6 @@ export const EditUserDialog = ({
 				}}
 			>
 				<DialogContent
-					tabIndex={0}
 					onOpenAutoFocus={(e) => e.preventDefault()}
 					showCloseButton={tab !== "cropper"}
 					className={cn(

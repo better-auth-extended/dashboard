@@ -67,6 +67,14 @@ export const users = () => {
 			"users.dialogs.editUser.cropImage.cancel.aria-label": "Cancel",
 			"users.dialogs.editUser.cropImage.apply": "Apply",
 			"users.dialogs.editUser.cropImage.zoomSlider.aria-label": "Zoom slider",
+			"users.dialogs.impersonateUser.title": "Impersonate user",
+			"users.dialogs.impersonateUser.description": {
+				vars: ["email", "name"],
+				fallbackValue: ({ email, name }) =>
+					`You are about to impersonate ${name} (${email}). All actions you take will appear as if performed by this user. Proceed with caution.`,
+			},
+			"users.dialogs.impersonateUser.cancel": "Cancel",
+			"users.dialogs.impersonateUser.impersonate": "Impersonate",
 		},
 	} satisfies Plugin;
 };

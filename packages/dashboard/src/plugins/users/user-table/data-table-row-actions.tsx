@@ -37,7 +37,7 @@ export const DataTableRowActions = ({ row }: DataTableRowActionsProps) => {
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end" className="min-w-[160px]">
 				<DropdownMenuItem
-					// TODO: disabled={!row.getCanSelect()}
+					disabled={!row.getCanSelect()}
 					onClick={() => {
 						setCurrentRow(row.original);
 						setOpen("edit");
@@ -47,7 +47,13 @@ export const DataTableRowActions = ({ row }: DataTableRowActionsProps) => {
 					{t("users.table.actions.edit")}
 				</DropdownMenuItem>
 
-				<DropdownMenuItem disabled={!row.getCanSelect()}>
+				<DropdownMenuItem
+					disabled={!row.getCanSelect()}
+					onClick={() => {
+						setCurrentRow(row.original);
+						setOpen("impersonate");
+					}}
+				>
 					<HatGlasses />
 					{t("users.table.actions.impersonate")}
 				</DropdownMenuItem>
