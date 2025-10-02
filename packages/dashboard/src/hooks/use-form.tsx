@@ -221,7 +221,7 @@ export function useForm<T extends Record<string, any>>({
 		[onSubmit],
 	);
 
-	const watch = <F extends keyof T & string>(field?: F) =>
+	const watch = <F extends (keyof T & string) | undefined>(field?: F) =>
 		useSyncExternalStore(watchStore.current.subscribe, () => {
 			const snapshot = watchStore.current.getSnapshot();
 			return field ? snapshot[field] : snapshot;

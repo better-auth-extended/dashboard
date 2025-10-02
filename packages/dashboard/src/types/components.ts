@@ -1,7 +1,6 @@
 import { Toaster as Sonner } from "sonner";
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
-import { type DialogProps } from "@radix-ui/react-dialog";
 import { Command as CommandPrimitive } from "cmdk";
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
@@ -13,6 +12,8 @@ import * as CollapsiblePrimitive from "@radix-ui/react-collapsible";
 import * as SheetPrimitive from "@radix-ui/react-dialog";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
+import { Cropper as CropperPrimitive } from "@origin-space/image-cropper";
+import * as SliderPrimitive from "@radix-ui/react-slider";
 import type React from "react";
 
 type Input = React.ComponentType<React.ComponentProps<"input">>;
@@ -332,7 +333,11 @@ type SelectSeparator = React.ComponentType<
 	React.ComponentProps<typeof SelectPrimitive.Separator>
 >;
 
-export type Components = {
+type Slider = React.ComponentType<
+	React.ComponentProps<typeof SliderPrimitive.Root>
+>;
+
+export type RequiredComponents = {
 	Button: Button;
 	Label: Label;
 	Input: Input;
@@ -433,4 +438,27 @@ export type Components = {
 	SelectLabel: SelectLabel;
 	SelectItem: SelectItem;
 	SelectSeparator: SelectSeparator;
+	Slider: Slider;
 };
+
+type Cropper = React.ComponentType<
+	React.ComponentProps<typeof CropperPrimitive.Root>
+>;
+type CropperDescription = React.ComponentType<
+	React.ComponentProps<typeof CropperPrimitive.Description>
+>;
+type CropperImage = React.ComponentType<
+	React.ComponentProps<typeof CropperPrimitive.Image>
+>;
+type CropperCropArea = React.ComponentType<
+	React.ComponentProps<typeof CropperPrimitive.CropArea>
+>;
+
+export type OptionalComponents = Partial<{
+	Cropper: Cropper;
+	CropperDescription: CropperDescription;
+	CropperImage: CropperImage;
+	CropperCropArea: CropperCropArea;
+}>;
+
+export type Components = RequiredComponents & OptionalComponents;

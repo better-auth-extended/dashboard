@@ -21,13 +21,24 @@ export const UserImage = ({
 	fallbackProps,
 	...props
 }: UserImageProps) => {
-	const { components } = useDashboard();
+	const {
+		components,
+		icons: { User },
+	} = useDashboard();
 	const { Avatar, AvatarFallback, AvatarImage } = components;
+
+	const fallback = user.name.charAt(0).toUpperCase();
 
 	return (
 		<Avatar {...props}>
-			<AvatarImage src={user.image ?? undefined} {...imageProps} alt={imageProps?.alt ?? user.name} />
-			<AvatarFallback {...fallbackProps}>{user.name.charAt(0).toUpperCase()}</AvatarFallback>
+			<AvatarImage
+				src={user.image ?? undefined}
+				{...imageProps}
+				alt={imageProps?.alt ?? user.name}
+			/>
+			<AvatarFallback {...fallbackProps}>
+				{fallback !== "" ? fallback : <User />}
+			</AvatarFallback>
 		</Avatar>
 	);
 };

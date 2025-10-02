@@ -14,6 +14,7 @@ import {
 import type { Session, User } from "better-auth";
 import type { Icons } from "./types/icons";
 import { defaultIcons } from "./utils/icons";
+import * as defaultComponents from "./default-components";
 
 export type DashboardConfig = {
 	/**
@@ -48,12 +49,15 @@ export const useDashboardPage = () => {
 export type DashboardContext = {
 	basePath: string;
 	source: Source;
-	components: Components;
+	components: Required<Components>;
 	icons: Icons;
 	authClient: Source["authClient"];
 	language: string | undefined;
 	setLanguage: React.Dispatch<React.SetStateAction<string | undefined>>;
-	t: (key: string, vars?: Record<string, string | number | null | undefined>) => string;
+	t: (
+		key: string,
+		vars?: Record<string, string | number | null | undefined>,
+	) => string;
 	translate: (value: string | TranslatableString) => string;
 };
 
@@ -85,7 +89,10 @@ export const Dashboard = memo(
 		const page = useMemo(() => source.getPage(slugs), [source, slugs]);
 
 		useEffect(() => {
-			if (!session?.user.role || !Object.keys(source.adminRoles).includes(session.user.role)) {
+			if (
+				!session?.user.role ||
+				!Object.keys(source.adminRoles).includes(session.user.role)
+			) {
 				// TODO: Get from options
 				router.push("/sign-in");
 			}
@@ -135,7 +142,10 @@ export const DashboardLayout = memo(
 		}, [language]);
 
 		const t = useCallback(
-			(key: string, vars?: Record<string, string | number | null | undefined>) => {
+			(
+				key: string,
+				vars?: Record<string, string | number | null | undefined>,
+			) => {
 				const res = source
 					.t(key, {
 						language,
@@ -164,7 +174,10 @@ export const DashboardLayout = memo(
 				({
 					basePath: source.basePath,
 					source,
-					components,
+					components: {
+						...defaultComponents,
+						...components,
+					},
 					icons: {
 						...defaultIcons,
 						...icons,

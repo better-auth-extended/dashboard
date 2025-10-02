@@ -20,6 +20,7 @@ export const users = () => {
 			"users.table.colName.email": "Email",
 			"users.table.colName.role": "Role",
 			"users.table.colName.createdAt": "Created At",
+			"users.table.toolbar.facetedFilter.role.label": "Role",
 			"users.table.toolbar.facetedFilter.selected": {
 				vars: ["size"],
 				fallbackValue: ({ size }) => `${size} selected`,
@@ -37,6 +38,22 @@ export const users = () => {
 			"users.table.actions.removeUser": "Remove user",
 			"users.dialogs.editUser.title": "Edit User",
 			"users.dialogs.editUser.description": "Edit the user details",
+			"users.dialogs.editUser.fields.image.label": "Avatar",
+			"users.dialogs.editUser.fields.image.description": {
+				vars: ["maxSize", "maxSizeMB"],
+				fallbackValue: ({ maxSizeMB }) => `Max size: ${maxSizeMB}MB`,
+			},
+			"users.dialogs.editUser.fields.image.changeImage": "Change image",
+			"users.dialogs.editUser.fields.image.removeImage.aria-label":
+				"Remove image",
+			"users.dialogs.editUser.fields.image.dropArea.title":
+				"Drop your image here",
+			"users.dialogs.editUser.fields.image.dropArea.description": {
+				vars: ["maxSize", "maxSizeMB"],
+				fallbackValue: ({ maxSizeMB }) => `Max size: ${maxSizeMB}MB`,
+			},
+			"users.dialogs.editUser.fields.image.aria-label": "Upload image file",
+			"users.dialogs.editUser.fields.image.uploadImage": "Upload image",
 			"users.dialogs.editUser.fields.name.label": "Name",
 			"users.dialogs.editUser.fields.name.placeholder": "Name",
 			"users.dialogs.editUser.fields.role.label": "Role",
@@ -45,6 +62,11 @@ export const users = () => {
 			"users.dialogs.editUser.fields.email.placeholder": "Email",
 			"users.dialogs.editUser.cancel": "Cancel",
 			"users.dialogs.editUser.save": "Save changes",
+			"users.dialogs.editUser.cropImage.title": "Crop image",
+			"users.dialogs.editUser.cropImage.description": "Crop image dialog",
+			"users.dialogs.editUser.cropImage.cancel.aria-label": "Cancel",
+			"users.dialogs.editUser.cropImage.apply": "Apply",
+			"users.dialogs.editUser.cropImage.zoomSlider.aria-label": "Zoom slider",
 		},
 	} satisfies Plugin;
 };

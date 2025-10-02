@@ -16,8 +16,8 @@ import {
 	useState,
 	useTransition,
 } from "react";
-import type { UserWithRole } from "better-auth/plugins/admin";
 import { DataTableToolbar } from "./data-table-toolbar";
+import { useUsers } from "../users-provider";
 
 export const UserTable = () => {
 	const { authClient, components, t } = useDashboard();
@@ -26,15 +26,9 @@ export const UserTable = () => {
 		pageIndex: 0,
 		pageSize: 20,
 	});
-	const [data, setData] = useState<{
-		total: number;
-		users: UserWithRole[];
-	}>({
-		total: 0,
-		users: [],
-	});
 	const [loading, startTransition] = useTransition();
 	const [searchValue, setSearchValue] = useState("");
+	const { data, setData } = useUsers();
 
 	const fetchUsers = useCallback(
 		(query: { pageIndex: number; pageSize: number; searchValue?: string }) =>
@@ -88,9 +82,7 @@ export const UserTable = () => {
 
 	return (
 		<div className="space-y-4">
-			<DataTableToolbar
-				table={table}
-			/>
+			<DataTableToolbar table={table} />
 			<DataTable table={table} />
 		</div>
 	);

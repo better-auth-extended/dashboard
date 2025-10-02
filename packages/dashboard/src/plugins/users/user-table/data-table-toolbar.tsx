@@ -38,7 +38,7 @@ export const DataTableToolbar = ({
 				{table.getColumn("role") && (
 					<DataTableFacetedFilter
 						column={table.getColumn("role")}
-						title="Role"
+						title={t("users.table.toolbar.facetedFilter.role.label")}
 						options={Object.entries(source.roles)
 							.sort(sortAdminRolesFn())
 							.map(([role, config]) => ({
