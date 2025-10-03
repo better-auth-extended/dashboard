@@ -58,7 +58,13 @@ export const DataTableRowActions = ({ row }: DataTableRowActionsProps) => {
 					{t("users.table.actions.impersonate")}
 				</DropdownMenuItem>
 				<DropdownMenuSeparator />
-				<DropdownMenuItem disabled={!row.getCanSelect()}>
+				<DropdownMenuItem
+					// TODO: disabled={!row.getCanSelect()}
+					onClick={() => {
+						setCurrentRow(row.original);
+						setOpen("ban");
+					}}
+				>
 					{!row.original.banned ? (
 						<>
 							<ShieldBan />

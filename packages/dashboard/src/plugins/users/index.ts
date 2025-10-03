@@ -75,6 +75,57 @@ export const users = () => {
 			},
 			"users.dialogs.impersonateUser.cancel": "Cancel",
 			"users.dialogs.impersonateUser.impersonate": "Impersonate",
+			"users.dialogs.banUser.title": "Ban user",
+			"users.dialogs.banUser.description": {
+				vars: ["email", "name"],
+				fallbackValue: ({ email, name }) =>
+					`You are about to ban ${name} (${email}). This will immediately block their account from accessing the platform.`,
+			},
+			"users.dialogs.banUser.fields.reason.label": "Reason",
+			"users.dialogs.banUser.fields.reason.placeholder": "Reason",
+			"users.dialogs.banUser.fields.duration.label": "Duration",
+			"users.dialogs.banUser.fields.duration.placeholder": "Select duration",
+			"users.dialogs.banUser.fields.duration.permanent": "Forever",
+			"users.dialogs.banUser.fields.duration.custom": "Custom",
+			"users.dialogs.banUser.fields.duration.custom.typeName": {
+				vars: ["type"],
+				fallbackValue: ({ type }) => {
+					const typeNameMap: Record<string, string> = {
+						seconds: "Second(s)",
+						minutes: "Minute(s)",
+						hours: "Hour(s)",
+						days: "Day(s)",
+						weeks: "Week(s)",
+					};
+
+					return `${typeNameMap[`${type}`]}`;
+				},
+			},
+			"users.dialogs.banUser.fields.duration.preset": {
+				vars: ["value", "type"],
+				fallbackValue: ({ value, type }) => {
+					const plural = Number(value) > 1;
+					const typeNameMap: Record<string, string> = {
+						seconds: "second",
+						minutes: "minute",
+						hours: "hour",
+						days: "day",
+						weeks: "week",
+					};
+
+					return `${value} ${typeNameMap[`${type}`]}${plural ? "s" : ""}`;
+				},
+			},
+			"users.dialogs.banUser.ban": "Ban",
+			"users.dialogs.banUser.cancel": "Cancel",
+			"users.dialogs.unbanUser.title": "Unban User",
+			"users.dialogs.unbanUser.description": {
+				vars: ["email", "name"],
+				fallbackValue: ({ email, name }) =>
+					`Are you sure you want to unban ${name} (${email})? This will restore their access to the platform.`,
+			},
+			"users.dialogs.unbanUser.unban": "Unban",
+			"users.dialogs.unbanUser.cancel": "Cancel",
 		},
 	} satisfies Plugin;
 };

@@ -36,8 +36,16 @@ export const ImpersonateUserDialog = ({
 		startTransition(async () => {
 			await authClient.admin.impersonateUser({
 				userId: currentRow.id,
+				fetchOptions: {
+					onSuccess: () => {
+						onOpenChange(false);
+						// TODO: Redirect?
+					},
+					onError: () => {
+						// TODO: Show error toast
+					},
+				},
 			});
-			// TODO: Redirect?
 		});
 	};
 
@@ -53,8 +61,12 @@ export const ImpersonateUserDialog = ({
 						})}
 					</DialogDescription>
 				</DialogHeader>
-				<DialogFooter className="grid grid-cols-2 grid-flow-reverse gap-3">
-					<Button className="w-full order-1" disabled={loading}>
+				<DialogFooter className="grid grid-cols-2 gap-3">
+					<Button
+						className="w-full order-1"
+						onClick={handleSubmit}
+						disabled={loading}
+					>
 						{loading && (
 							<LoaderCircle className="animate-spin repeat-infinite" />
 						)}

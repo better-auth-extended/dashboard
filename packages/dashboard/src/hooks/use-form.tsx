@@ -38,6 +38,19 @@ export type UseFormOptions<T extends Record<string, any>> = {
 	onSubmit: (values: T) => void | Promise<void>;
 };
 
+export type FormFieldType<
+	T extends Record<string, any>,
+	N extends keyof T & string,
+> = {
+	name: N;
+	ref: (el: HTMLInputElement | HTMLTextAreaElement | null) => void;
+	value?: T[N];
+	onChange: (
+		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | T[N],
+	) => void;
+	onBlur: () => void;
+};
+
 export type UseFormResult<T extends Record<string, any>> = ReturnType<
 	typeof useForm<T>
 >;
@@ -179,16 +192,19 @@ export function useForm<T extends Record<string, any>>({
 		return event === reValidateMode;
 	};
 
-	const register = <N extends keyof T & string>(name: N) => ({
+	const register = <N extends keyof T & string>(
+		name: N,
+	): FormFieldType<T, N> => ({
 		name,
-		ref: (el: HTMLInputElement | HTMLTextAreaElement | null) => {
+		ref: (el) => {
 			if (el) refs.current[name] = el;
 		},
 		value: values[name],
-		onChange: (
-			e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | T[N],
-		) => {
-			const val = typeof e === "object" && "target" in e ? e.target.value : e;
+		onChange: (e) => {
+			const val =
+				e !== null && typeof e === "object" && "target" in e
+					? e.target.value
+					: e;
 			setValues((prev) => ({ ...prev, [name]: val }));
 
 			if (shouldValidate(name, "onChange"))

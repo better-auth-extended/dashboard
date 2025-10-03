@@ -5,7 +5,7 @@ import { createContext } from "../../utils/create-context";
 import { useDialogState } from "../../hooks/use-dialog-state";
 import { useState } from "react";
 
-type UsersDialogType = "edit" | "impersonate";
+type UsersDialogType = "edit" | "impersonate" | "ban";
 
 type UsersState = {
 	users: UserWithRole[];

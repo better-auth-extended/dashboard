@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useMemo } from "react";
-import type { UseFormResult } from "../hooks/use-form";
+import type { FormFieldType, UseFormResult } from "../hooks/use-form";
 import { createContext } from "../utils/create-context";
 import type { Root as LabelPrimitiveRoot } from "@radix-ui/react-label";
 import { cn } from "../utils/cn";
@@ -57,8 +57,9 @@ export type FormFieldProps<
 	name: N;
 	control?: UseFormResult<T>["control"];
 	children?: (ctx: {
-		// TODO: Infer N
-		field: ReturnType<UseFormResult<T>["register"]>;
+		id: string;
+		form: FormContextType<T>;
+		field: FormFieldType<T, N>;
 	}) => React.ReactNode;
 };
 
@@ -74,7 +75,7 @@ export const FormField = <
 	control?: UseFormResult<T>["control"];
 }) => {
 	const id = useId();
-	const form = useFormContext();
+	const form = useFormContext<T>();
 
 	const field = useMemo(() => form.register(name), [form.register, name]);
 
@@ -85,7 +86,7 @@ export const FormField = <
 
 	return (
 		<FormFieldContext.Provider value={providerValue}>
-			{children?.({ field })}
+			{children?.({ id, form, field })}
 		</FormFieldContext.Provider>
 	);
 };
