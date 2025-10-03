@@ -59,7 +59,7 @@ export const DataTableRowActions = ({ row }: DataTableRowActionsProps) => {
 				</DropdownMenuItem>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem
-					// TODO: disabled={!row.getCanSelect()}
+					disabled={!row.getCanSelect()}
 					onClick={() => {
 						setCurrentRow(row.original);
 						setOpen("ban");
@@ -77,7 +77,13 @@ export const DataTableRowActions = ({ row }: DataTableRowActionsProps) => {
 						</>
 					)}
 				</DropdownMenuItem>
-				<DropdownMenuItem disabled={!row.getCanSelect()}>
+				<DropdownMenuItem
+					disabled={!row.getCanSelect()}
+					onClick={() => {
+						setCurrentRow(row.original);
+						setOpen("remove");
+					}}
+				>
 					<Trash />
 					{t("users.table.actions.removeUser")}
 				</DropdownMenuItem>

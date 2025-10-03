@@ -126,6 +126,13 @@ export const users = () => {
 			},
 			"users.dialogs.unbanUser.unban": "Unban",
 			"users.dialogs.unbanUser.cancel": "Cancel",
+			"users.dialogs.removeUser.title": "Remove user",
+			"users.dialogs.removeUser.description": {
+				vars: ["email", "name"],
+				fallbackValue: ({ email, name }) => ``,
+			},
+			"users.dialogs.removeUser.remove": "Remove user",
+			"users.dialogs.removeUser.cancel": "Cancel",
 		},
 	} satisfies Plugin;
 };

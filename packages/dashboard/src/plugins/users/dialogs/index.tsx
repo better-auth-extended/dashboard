@@ -4,6 +4,7 @@ import { useUsers } from "../users-provider";
 import { BanUserDialog } from "./ban-user-dialog";
 import { EditUserDialog } from "./edit-user-dialog";
 import { ImpersonateUserDialog } from "./impersonate-user-dialog";
+import { RemoveUserDialog } from "./remove-user-dialog";
 
 export const UsersDialogs = () => {
 	const { open, setOpen, currentRow, setCurrentRow } = useUsers();
@@ -43,6 +44,16 @@ export const UsersDialogs = () => {
 						open={open === "ban"}
 						onOpenChange={() => {
 							setOpen("ban");
+							resetCurrentRow();
+						}}
+						currentRow={currentRow}
+					/>
+
+					<RemoveUserDialog
+						key={`user-remove-${currentRow.id}`}
+						open={open === "remove"}
+						onOpenChange={() => {
+							setOpen("remove");
 							resetCurrentRow();
 						}}
 						currentRow={currentRow}
