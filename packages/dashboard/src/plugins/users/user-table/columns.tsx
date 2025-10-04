@@ -67,7 +67,7 @@ export const columns: ColumnsFn = ({ components, t }) => {
 						<UserImage
 							user={{
 								name,
-								image
+								image,
 							}}
 							className="size-7"
 						/>
@@ -112,20 +112,30 @@ export const columns: ColumnsFn = ({ components, t }) => {
 			cell: ({ getValue }) => {
 				const { source, t, icons } = useDashboard();
 				const { Tag } = icons;
-				const role = getValue<string>()
-				const config = source.roles[role];
-
-				const Icon = config?.icon ?? Tag; 
+				const roles = getValue<string>();
 
 				return (
-					<Badge variant="outline" className="flex items-center rounded-sm">
-						<Icon className="-ms-0.5 mr-0.5 size-4" />
-						<span>
-							{t("roleName", {
-								role,
-							})}
-						</span>
-					</Badge>
+					<div className="flex items-center gap-1.5">
+						{roles.split(",").map((role, i) => {
+							const config = source.roles[role];
+							const Icon = config?.icon ?? Tag;
+
+							return (
+								<Badge
+									key={i}
+									variant="outline"
+									className="flex items-center rounded-sm"
+								>
+									<Icon className="-ms-0.5 mr-0.5 size-4" />
+									<span>
+										{t("roleName", {
+											role,
+										})}
+									</span>
+								</Badge>
+							);
+						})}
+					</div>
 				);
 			},
 			size: 100,
@@ -146,12 +156,12 @@ export const columns: ColumnsFn = ({ components, t }) => {
 		},
 		{
 			id: "actions",
-			cell: ({ row }) => (
-				<DataTableRowActions row={row} />
-			),
+			cell: ({ row }) => {
+				return <DataTableRowActions row={row} />;
+			},
 			enableHiding: false,
 			enableSorting: false,
-			size: 30
-		}
+			size: 30,
+		},
 	];
 };

@@ -89,9 +89,14 @@ export const Dashboard = memo(
 		const page = useMemo(() => source.getPage(slugs), [source, slugs]);
 
 		useEffect(() => {
+			const userRoles = (
+				session?.user.role ||
+				source.options.defaultRole ||
+				"user"
+			).split(",");
 			if (
 				!session?.user.role ||
-				!Object.keys(source.adminRoles).includes(session.user.role)
+				!Object.keys(source.adminRoles).some((role) => userRoles.includes(role))
 			) {
 				// TODO: Get from options
 				router.push("/sign-in");
