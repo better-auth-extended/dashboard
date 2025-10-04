@@ -7,13 +7,16 @@ export const users = () => {
 		routes: ({ t }) => [
 			{
 				title: t("users.title"),
+				description: t("users.description"),
 				slug: "users",
 				component: lazy(() => import("./UsersComponent")),
 			},
 		],
 		translations: {
 			"users.title": "Users",
-			"users.description": "",
+			// TODO:
+			"users.description":
+				"Aliqua mollit in ex Lorem magna culpa laborum magna eu elit mollit nulla tempor.",
 			"users.table.selectAll.aria-description": "Select all",
 			"users.table.selectRow.aria-description": "Select row",
 			"users.table.colName.user": "User",

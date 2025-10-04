@@ -29,7 +29,7 @@ const RenderPage = memo(({ page }: { page: PluginPage | null }) => {
 	const Component = page.component;
 
 	return (
-		<SidebarInset>
+		<SidebarInset className="@container/content">
 			<header className="flex py-2.5 shrink-0 items-center gap-2 border-b px-4">
 				<SidebarTrigger className="-ml-1" />
 				<Separator

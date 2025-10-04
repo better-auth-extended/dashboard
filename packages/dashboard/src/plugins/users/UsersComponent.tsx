@@ -1,29 +1,25 @@
 "use client";
 
-import { useDashboardPage } from "../../dashboard";
-import { I18nLabel } from "../../ui/i18n-label";
 import type { PageComponent } from "../../types";
 import { UserTable } from "./user-table";
 import { UsersProvider } from "./users-provider";
 import { UsersDialogs } from "./dialogs";
+import { Main } from "../../ui/main";
+import { Heading } from "../../ui/heading";
 
-export default (function UsersComponent({ components, page }) {
-	const { session } = useDashboardPage();
-
+export default (function UsersComponent({ page, components: { Button } }) {
 	return (
 		<UsersProvider>
-			<h1>{page.title}</h1>
-			<p>
-				<I18nLabel
-					label="users.description"
-					vars={{
-						name: session.user.name,
-					}}
-				/>
-			</p>
-			<UserTable />
+			<Main>
+				<Heading heading={page.title} description={page.description}>
+					{/* TODO: Primary actions */}
+					<Button>Add user</Button>
+				</Heading>
 
-			<UsersDialogs />
+				<UserTable />
+
+				<UsersDialogs />
+			</Main>
 		</UsersProvider>
 	);
 } satisfies PageComponent);
