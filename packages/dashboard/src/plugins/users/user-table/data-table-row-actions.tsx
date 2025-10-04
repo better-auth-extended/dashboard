@@ -64,6 +64,7 @@ export const DataTableRowActions = ({ row }: DataTableRowActionsProps) => {
 				</DropdownMenuItem>
 				<ChangeRoleAction row={row} />
 				<DropdownMenuSeparator />
+				<RevokeSessionsActions row={row} setOpen={setOpen} />
 				<DropdownMenuItem
 					disabled={!row.getCanSelect()}
 					onClick={() => {
@@ -228,3 +229,40 @@ const ChangeRoleAction = ({ row }: DataTableRowActionsProps) => {
 	);
 };
 ChangeRoleAction.displayName = "ChangeRoleAction";
+
+const RevokeSessionsActions = ({
+	row,
+	setOpen,
+}: DataTableRowActionsProps & {
+	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+	const {
+		t,
+		authClient,
+		icons: { ShieldX },
+		components: { DropdownMenuItem },
+	} = useDashboard();
+
+	const handleSubmit = async () => {
+		setOpen(false);
+		await authClient.admin.revokeUserSessions({
+			userId: row.original.id,
+			fetchOptions: {
+				onSuccess: () => {
+					// TODO: Show success toast
+				},
+				onError: (ctx) => {
+					// TODO: Show error toast
+				},
+			},
+		});
+	};
+
+	return (
+		<DropdownMenuItem disabled={!row.getCanSelect()} onClick={handleSubmit}>
+			<ShieldX />
+			{t("users.table.actions.revokeSessions")}
+		</DropdownMenuItem>
+	);
+};
+RevokeSessionsActions.displayName = "RevokeSessionsActions";

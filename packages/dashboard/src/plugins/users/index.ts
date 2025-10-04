@@ -39,6 +39,7 @@ export const users = () => {
 			"users.table.actions.changeRole": "Change role",
 			"users.table.actions.changeRole.placeholder": "Role",
 			"users.table.actions.changeRole.noResults": "No results",
+			"users.table.actions.revokeSessions": "Revoke Sessions",
 			"users.dialogs.editUser.title": "Edit User",
 			"users.dialogs.editUser.description": "Edit the user details",
 			"users.dialogs.editUser.fields.image.label": "Avatar",
