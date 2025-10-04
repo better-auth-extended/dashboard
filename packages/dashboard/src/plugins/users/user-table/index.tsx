@@ -1,23 +1,21 @@
 "use client";
 
 import {
+	type ColumnFiltersState,
 	getCoreRowModel,
 	getPaginationRowModel,
 	type PaginationState,
+	type SortingState,
 	useReactTable,
 } from "@tanstack/react-table";
 import { columns } from "./columns";
 import { useDashboard, useDashboardPage } from "../../../dashboard";
 import { DataTable } from "./data-table";
-import {
-	useCallback,
-	useEffect,
-	useMemo,
-	useState,
-	useTransition,
-} from "react";
+import { useCallback, useEffect, useState, useTransition } from "react";
 import { DataTableToolbar } from "./data-table-toolbar";
 import { useUsers } from "../users-provider";
+import { useDebounceCallback } from "../../../hooks/use-debounce-callback";
+import { DataTablePagination } from "./data-table-pagination";
 
 export const UserTable = () => {
 	const { authClient, components, t } = useDashboard();
@@ -26,23 +24,40 @@ export const UserTable = () => {
 		pageIndex: 0,
 		pageSize: 20,
 	});
+	const [sorting, setSorting] = useState<SortingState>([]);
+	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+	const [globalFilter, setGlobalFilter] = useState("");
 	const [loading, startTransition] = useTransition();
-	const [searchValue, setSearchValue] = useState("");
 	const { data, setData } = useUsers();
 
 	const fetchUsers = useCallback(
-		(query: { pageIndex: number; pageSize: number; searchValue?: string }) =>
+		({
+			pageIndex,
+			pageSize,
+			globalFilter,
+			sorting,
+			columnFilters,
+		}: {
+			pageIndex: number;
+			pageSize: number;
+			globalFilter: string;
+			sorting: SortingState;
+			columnFilters: ColumnFiltersState;
+		}) =>
 			startTransition(async () => {
+				const activeFilter = columnFilters[0];
+
 				const result = await authClient.admin.listUsers({
 					query: {
-						limit: query.pageSize,
-						offset: query.pageSize * query.pageIndex,
-						searchValue:
-							query.searchValue && query.searchValue.trim().length > 0
-								? query.searchValue
-								: searchValue.trim().length > 0
-									? searchValue
-									: undefined,
+						searchValue: globalFilter?.trim().toLowerCase(),
+						limit: pageSize,
+						offset: pageIndex * pageSize,
+						sortBy: sorting[0]?.id,
+						sortDirection: sorting[0]?.desc ? "desc" : "asc",
+						// TODO:
+						// filterOperator: ,
+						// filterField: activeFilter?.id,
+						// filterValue: activeFilter?.value,
 					},
 				});
 
@@ -50,20 +65,19 @@ export const UserTable = () => {
 					setData(result.data);
 				}
 			}),
-		[authClient],
+		[authClient, setData],
 	);
-
-	const safePagination = useMemo(
-		() => pagination,
-		[JSON.stringify(pagination)],
-	);
+	const debouncedFetch = useDebounceCallback(fetchUsers, 400);
 
 	useEffect(() => {
-		fetchUsers({
-			...safePagination,
-			searchValue: undefined,
+		debouncedFetch({
+			pageIndex: pagination.pageIndex,
+			pageSize: pagination.pageSize,
+			globalFilter,
+			sorting,
+			columnFilters,
 		});
-	}, [safePagination]);
+	}, [pagination, sorting, columnFilters, globalFilter]);
 
 	const table = useReactTable({
 		data: data.users,
@@ -73,9 +87,19 @@ export const UserTable = () => {
 		}),
 		state: {
 			pagination,
+			globalFilter,
+			sorting,
+			columnFilters,
 		},
+		manualPagination: true,
+		manualSorting: true,
+		manualFiltering: true,
+		pageCount: Math.ceil(data.total / pagination.pageSize),
 		enableRowSelection: (row) => row.original.id !== session.user.id,
 		onPaginationChange: setPagination,
+		onSortingChange: setSorting,
+		onGlobalFilterChange: setGlobalFilter,
+		onColumnFiltersChange: setColumnFilters,
 		getCoreRowModel: getCoreRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
 	});
@@ -84,6 +108,7 @@ export const UserTable = () => {
 		<div className="space-y-4">
 			<DataTableToolbar table={table} />
 			<DataTable table={table} />
+			<DataTablePagination table={table} />
 		</div>
 	);
 };

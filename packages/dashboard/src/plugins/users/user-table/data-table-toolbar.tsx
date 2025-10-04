@@ -29,6 +29,8 @@ export const DataTableToolbar = ({
 						placeholder={t("users.table.toolbar.search")}
 						autoComplete="off"
 						type="text"
+						value={table.getState().globalFilter ?? ""}
+						onChange={(e) => table.setGlobalFilter(e.target.value)}
 						className="peer ps-9 h-8"
 					/>
 					<div className="text-muted-foreground/80 pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 peer-disabled:opacity-50">
@@ -55,6 +57,7 @@ export const DataTableToolbar = ({
 						variant="ghost"
 						onClick={() => {
 							table.resetColumnFilters();
+							table.resetGlobalFilter();
 						}}
 						className="h-8 px-2 lg:px-3"
 					>

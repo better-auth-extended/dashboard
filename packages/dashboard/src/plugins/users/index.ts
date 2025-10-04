@@ -43,6 +43,21 @@ export const users = () => {
 			"users.table.actions.changeRole.placeholder": "Role",
 			"users.table.actions.changeRole.noResults": "No results",
 			"users.table.actions.revokeSessions": "Revoke Sessions",
+			"users.table.pagination.itemsPerPage": "Items per page",
+			"users.table.pagination.pageIndicator": {
+				vars: ["currentPage", "totalPages"],
+				fallbackValue: ({ currentPage, totalPages }) =>
+					`Page ${currentPage} of ${totalPages}`,
+			},
+			"users.table.pagination.goToFirstPage.aria-label": "Go to first page",
+			"users.table.pagination.goToPreviousPage.aria-label":
+				"Go to previous page",
+			"users.table.pagination.goToPage.aria-label": {
+				vars: ["pageNumber"],
+				fallbackValue: ({ pageNumber }) => `Go to page ${pageNumber}`,
+			},
+			"users.table.pagination.goToNextPage.aria-label": "Go to next page",
+			"users.table.pagination.goToLastPage.aria-label": "Go to last page",
 			"users.dialogs.editUser.title": "Edit User",
 			"users.dialogs.editUser.description": "Edit the user details",
 			"users.dialogs.editUser.fields.image.label": "Avatar",
@@ -136,7 +151,8 @@ export const users = () => {
 			"users.dialogs.removeUser.title": "Remove user",
 			"users.dialogs.removeUser.description": {
 				vars: ["email", "name"],
-				fallbackValue: ({ email, name }) => ``,
+				fallbackValue: ({ email, name }) =>
+					`Removing user ${name} (${email}) will permanently delete their account and revoke all access. This action cannot be undone.`,
 			},
 			"users.dialogs.removeUser.remove": "Remove user",
 			"users.dialogs.removeUser.cancel": "Cancel",

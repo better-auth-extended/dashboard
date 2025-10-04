@@ -29,12 +29,15 @@ export const source = createSource({
 				"users.table.colName.createdAt": "Beigetreten am",
 				"users.table.selectAll.aria-description": "Alle auswählen",
 				"users.table.selectRow.aria-description": "Reihe auswählen",
-				"users.description": "",
+				// TODO:
+				"users.description":
+					"Cillum proident et elit cupidatat sunt cillum ad esse elit.",
 				"ui.openMenu.aria-label": "Menü öffnen",
 				"users.table.toolbar.facetedFilter.noResults": "Keine Resultate",
 				"users.table.toolbar.facetedFilter.clear": "Zurücksetzen",
 				"users.table.toolbar.facetedFilter.selected": (vars) =>
 					`${vars.size} ausgewählt`,
+				"users.table.toolbar.facetedFilter.role.label": "Rolle",
 				"users.table.toolbar.search": "Benutzer filtern...",
 				"users.table.toolbar.reset": "Zurücksetzen",
 				"users.table.toolbar.view": "Ansicht",
@@ -44,8 +47,37 @@ export const source = createSource({
 				"users.table.actions.ban": "Sperren",
 				"users.table.actions.unban": "Entsperren",
 				"users.table.actions.removeUser": "Benutzer entfernen",
+				"users.table.actions.changeRole": "Rolle ändern",
+				"users.table.actions.changeRole.placeholder": "Rolle",
+				"users.table.actions.changeRole.noResults": "Keine Resultate",
+				"users.table.actions.revokeSessions": "Sitzungen beenden",
+				"users.table.pagination.itemsPerPage": "Reihen pro Seite",
+				"users.table.pagination.pageIndicator": (vars) =>
+					`Seite ${vars.currentPage} von ${vars.totalPages}`,
+				"users.table.pagination.goToFirstPage.aria-label":
+					"Gehe zur ersten Seite",
+				"users.table.pagination.goToPreviousPage.aria-label":
+					"Gehe zur vorherigen Seite",
+				"users.table.pagination.goToPage.aria-label": (vars) =>
+					`Gehe zu Seite ${vars.pageNumber}`,
+				"users.table.pagination.goToNextPage.aria-label":
+					"Gehe zur nächsten Seite",
+				"users.table.pagination.goToLastPage.aria-label":
+					"Gehe zur letzten Seite",
 				"users.dialogs.editUser.title": "Benutzer bearbeiten",
 				"users.dialogs.editUser.description": "Benutzerdetails bearbeiten",
+				"users.dialogs.editUser.fields.image.changeImage": "Bild ändern",
+				"users.dialogs.editUser.fields.image.removeImage.aria-label":
+					"Bild entfernen",
+				"users.dialogs.editUser.fields.image.dropArea.title":
+					"Bilddatei ablegen",
+				"users.dialogs.editUser.fields.image.dropArea.description": (vars) =>
+					`Maximale Größe: ${vars.maxSizeMB} MB`,
+				"users.dialogs.editUser.fields.image.label": "Profilbild",
+				"users.dialogs.editUser.fields.image.description": (vars) =>
+					`Maximale Größe: ${vars.maxSizeMB} MB`,
+				"users.dialogs.editUser.fields.image.aria-label": "Bilddatei hochladen",
+				"users.dialogs.editUser.fields.image.uploadImage": "Bild hochladen",
 				"users.dialogs.editUser.fields.name.label": "Name",
 				"users.dialogs.editUser.fields.name.placeholder": "Name",
 				"users.dialogs.editUser.fields.role.label": "Rolle",
@@ -54,6 +86,59 @@ export const source = createSource({
 				"users.dialogs.editUser.fields.email.placeholder": "E-Mail",
 				"users.dialogs.editUser.cancel": "Abbrechen",
 				"users.dialogs.editUser.save": "Änderungen speichern",
+				"users.dialogs.editUser.cropImage.title": "Bild zuschneiden",
+				"users.dialogs.editUser.cropImage.description": "Bild zuschneiden",
+				"users.dialogs.editUser.cropImage.cancel.aria-label": "Abbrechen",
+				"users.dialogs.editUser.cropImage.apply": "Anwenden",
+				"users.dialogs.editUser.cropImage.zoomSlider.aria-label": "Zoom-Regler",
+				"users.dialogs.banUser.ban": "Sperren",
+				"users.dialogs.banUser.cancel": "Abbrechen",
+				"users.dialogs.banUser.title": "Benutzer sperren",
+				"users.dialogs.banUser.description": (vars) =>
+					`Du bist dabei, ${vars.name} (${vars.email}) zu sperren. Dadurch wird das Konto sofort blockiert und der Zugriff auf die Plattform verhindert.`,
+				"users.dialogs.banUser.fields.reason.label": "Grund",
+				"users.dialogs.banUser.fields.reason.placeholder": "Grund",
+				"users.dialogs.banUser.fields.duration.label": "Dauer",
+				"users.dialogs.banUser.fields.duration.placeholder": "Dauer wählen",
+				"users.dialogs.banUser.fields.duration.permanent": "Permanent",
+				"users.dialogs.banUser.fields.duration.custom": "Benutzerdefiniert",
+				"users.dialogs.banUser.fields.duration.custom.typeName": ({ type }) => {
+					const typeNameMap: Record<string, string> = {
+						seconds: "Sekunde(n)",
+						minutes: "Minute(n)",
+						hours: "Stunde(n)",
+						days: "Tag(e)",
+						weeks: "Woche(n)",
+					};
+
+					return `${typeNameMap[`${type}`]}`;
+				},
+				"users.dialogs.banUser.fields.duration.preset": ({ value, type }) => {
+					const plural = Number(value) > 1;
+					const typeNameMap: Record<string, string> = {
+						seconds: `Sekunde${plural ? "n" : ""}`,
+						minutes: `Minute${plural ? "n" : ""}`,
+						hours: `Stunde${plural ? "n" : ""}`,
+						days: `Tag${plural ? "e" : ""}`,
+						weeks: `Woche${plural ? "n" : ""}`,
+					};
+
+					return `${value} ${typeNameMap[`${type}`]}`;
+				},
+				"users.dialogs.unbanUser.title": "Benutzer entsperren",
+				"users.dialogs.unbanUser.description": (vars) =>
+					`Bist du sicher, dass du ${vars.name} (${vars.email}) entsperren möchtest? Dadurch wird der Zugriff auf die Plattform wiederhergestellt.`,
+				"users.dialogs.unbanUser.unban": "Entsperren",
+				"users.dialogs.unbanUser.cancel": "Abbrechen",
+				"users.dialogs.removeUser.title": "Benutzer entfernen",
+				"users.dialogs.removeUser.description": (vars) => ``,
+				"users.dialogs.removeUser.remove": "Benutzer entfernen",
+				"users.dialogs.removeUser.cancel": "Abbrechen",
+				"users.dialogs.impersonateUser.title": "Als Benutzer anmelden",
+				"users.dialogs.impersonateUser.description": (vars) =>
+					`Du bist dabei, dich als ${vars.name} (${vars.email}) anzumelden. Alle Aktionen, die du ausführst, werden so angezeigt, als kämen sie von diesem Benutzer. Vorsicht beim Fortfahren.`,
+				"users.dialogs.impersonateUser.impersonate": "Anmelden",
+				"users.dialogs.impersonateUser.cancel": "Abbrechen",
 				roleName: (vars) => {
 					const role = `${vars.role}`;
 					if (role === "user") {
