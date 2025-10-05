@@ -11,10 +11,11 @@ export interface Option {
 	value: string;
 	label: string;
 	disable?: boolean;
+	keywords?: string[];
 	/** fixed option that can't be removed. */
 	fixed?: boolean;
 	/** Group the options by providing key. */
-	[key: string]: string | boolean | undefined;
+	[key: string]: string | boolean | string[] | undefined;
 }
 interface GroupOption {
 	[key: string]: Option[];
@@ -363,6 +364,7 @@ export const MultiSelect = React.forwardRef<HTMLInputElement, MultiSelectProps>(
 						onChange?.(newOptions);
 					}}
 				>
+					{/* TODO: Translate */}
 					{`Create "${inputValue}"`}
 				</CommandItem>
 			);
@@ -584,6 +586,7 @@ export const MultiSelect = React.forwardRef<HTMLInputElement, MultiSelectProps>(
 															<CommandItem
 																key={option.value}
 																value={option.value}
+																keywords={option.keywords}
 																disabled={option.disable}
 																onMouseDown={(e) => {
 																	e.preventDefault();

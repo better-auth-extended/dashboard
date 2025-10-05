@@ -236,9 +236,11 @@ const EditUserContent = ({
 									.sort(sortAdminRolesFn())
 									.map(([role, config]) => {
 										// TODO: icons
+										const displayName = t("roleName", { role });
 										return {
-											label: t("roleName", { role }),
+											label: displayName,
 											value: role,
+											keywords: [displayName],
 										} satisfies Option;
 									});
 
