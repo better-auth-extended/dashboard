@@ -25,6 +25,10 @@ export const source = createSource({
 				"ui.languageSwitch.aria-label": "Sprache ändern",
 				"ui.languageSwitch.noResults": "Keine Resultate",
 				"ui.languageSwitch.placeholder": "Sprache suchen...",
+				"ui.multiselect.creatableItem.label": (vars) =>
+					`Erstelle "${vars.inputValue}"`,
+				"ui.multiselect.remove.aria-label": "Entfernen",
+				"ui.multiselect.clearAll.aria-label": "Alle entfernen",
 				"home.title": "Übersicht",
 				"home.welcome": "Willkommen im Dashboard",
 				"users.title": "Benutzer",
@@ -159,6 +163,7 @@ export const source = createSource({
 				"users.dialogs.createUser.fields.role.noResults": "Keine Resultate",
 				"users.dialogs.createUser.create": "Benutzer erstellen",
 				"users.dialogs.createUser.cancel": "Abbrechen",
+				"users.dialogs.editUser.fields.role.noResults": "Keine Resultate",
 				roleName: (vars) => {
 					const role = `${vars.role}`;
 					if (role === "user") {

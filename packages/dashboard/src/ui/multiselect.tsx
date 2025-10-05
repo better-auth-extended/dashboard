@@ -195,6 +195,7 @@ export const MultiSelect = React.forwardRef<HTMLInputElement, MultiSelectProps>(
 		ref,
 	) => {
 		const {
+			t,
 			icons: { X },
 			components: { Command, CommandList, CommandGroup, CommandItem },
 		} = useDashboard();
@@ -364,8 +365,7 @@ export const MultiSelect = React.forwardRef<HTMLInputElement, MultiSelectProps>(
 						onChange?.(newOptions);
 					}}
 				>
-					{/* TODO: Translate */}
-					{`Create "${inputValue}"`}
+					{t("ui.multiselect.creatableItem.label", { inputValue })}
 				</CommandItem>
 			);
 
@@ -476,8 +476,7 @@ export const MultiSelect = React.forwardRef<HTMLInputElement, MultiSelectProps>(
 											e.stopPropagation();
 										}}
 										onClick={() => handleUnselect(option)}
-										// TODO: Translate
-										aria-label="Remove"
+										aria-label={t("ui.multiselect.remove.aria-label")}
 									>
 										<X className="size-3.5" aria-hidden="true" />
 									</button>
@@ -536,8 +535,7 @@ export const MultiSelect = React.forwardRef<HTMLInputElement, MultiSelectProps>(
 									selected.filter((s) => s.fixed).length === selected.length) &&
 									"hidden",
 							)}
-							// TODO: Translate
-							aria-label="Clear all"
+							aria-label={t("ui.multiselect.clearAll.aria-label")}
 						>
 							<X className="size-4" aria-hidden="true" />
 						</button>

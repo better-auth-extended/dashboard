@@ -59,6 +59,12 @@ const defaultTranslations = {
 	"ui.passwordInput.toggleVisibility.hide.aria-label": "Hide password",
 	"ui.passwordInput.toggleVisibility.show.aria-label": "Show password",
 	"ui.state.loading.aria-label": "Loading...",
+	"ui.multiselect.creatableItem.label": {
+		vars: ["inputValue"],
+		fallbackValue: ({ inputValue }) => `Create "${inputValue}"`,
+	},
+	"ui.multiselect.remove.aria-label": "Remove",
+	"ui.multiselect.clearAll.aria-label": "Clear all",
 	"home.title": "Home",
 	"home.welcome": "Welcome to the dashboard",
 } as const satisfies PluginTranslations;
