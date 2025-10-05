@@ -1,7 +1,7 @@
 "use client";
 
 import { Fragment, memo, Suspense } from "react";
-import { useDashboard } from "../dashboard";
+import { useDashboard, type DashboardProps } from "../dashboard";
 import { AppSidebar } from "./app-sidebar";
 import { Link } from "../framework";
 import { getBreadcrumb } from "../utils/get-breadcrumbs";
@@ -79,22 +79,30 @@ const RenderPage = memo(({ page }: { page: PluginPage | null }) => {
 });
 RenderPage.displayName = "RenderPage";
 
-export const DashboardUI = memo(({ page }: { page: PluginPage }) => {
-	const { translate } = useDashboard();
+export const DashboardUI = memo(
+	({
+		page,
+		sidebar,
+	}: {
+		page: PluginPage;
+		sidebar: DashboardProps["sidebar"];
+	}) => {
+		const { translate } = useDashboard();
 
-	return (
-		<>
-			<AppSidebar />
-			<RenderPage
-				page={{
-					...page,
-					title: translate(page.title),
-					description: page.description
-						? translate(page.description)
-						: undefined,
-				}}
-			/>
-		</>
-	);
-});
+		return (
+			<>
+				<AppSidebar options={sidebar} />
+				<RenderPage
+					page={{
+						...page,
+						title: translate(page.title),
+						description: page.description
+							? translate(page.description)
+							: undefined,
+					}}
+				/>
+			</>
+		);
+	},
+);
 DashboardUI.displayName = "DashboardUI";

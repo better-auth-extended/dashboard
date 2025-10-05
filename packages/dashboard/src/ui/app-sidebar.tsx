@@ -1,33 +1,53 @@
-import { useDashboard } from "../dashboard";
+import { useDashboard, type DashboardProps } from "../dashboard";
 import { Link, usePathname } from "../framework";
 import { getPath } from "../utils/get-path";
 import { UserMenu } from "./user-menu";
 
-export const AppSidebar = () => {
-	const { basePath, source, components, icons, translate } = useDashboard();
+export const AppSidebar = ({
+	options,
+}: {
+	options: DashboardProps["sidebar"];
+}) => {
 	const {
-		Sidebar,
-		SidebarContent,
-		SidebarGroup,
-		SidebarGroupLabel,
-		SidebarGroupContent,
-		SidebarMenu,
-		SidebarMenuButton,
-		SidebarMenuItem,
-		SidebarFooter,
-		SidebarMenuAction,
-		SidebarMenuSub,
-		SidebarMenuSubItem,
-		SidebarMenuSubButton,
-		Collapsible,
-		CollapsibleTrigger,
-		CollapsibleContent,
-	} = components;
-	const { ChevronRight } = icons;
+		enabled: headerEnabled,
+		component: headerComponent,
+		...headerProps
+	} = {
+		enabled: true,
+		...options?.header,
+	};
+	const {
+		basePath,
+		source,
+		translate,
+		icons,
+		components: {
+			Sidebar,
+			SidebarHeader,
+			SidebarContent,
+			SidebarGroup,
+			SidebarGroupLabel,
+			SidebarGroupContent,
+			SidebarMenu,
+			SidebarMenuButton,
+			SidebarMenuItem,
+			SidebarFooter,
+			SidebarMenuAction,
+			SidebarMenuSub,
+			SidebarMenuSubItem,
+			SidebarMenuSubButton,
+			Collapsible,
+			CollapsibleTrigger,
+			CollapsibleContent,
+		},
+	} = useDashboard();
 	const pathname = usePathname();
 
 	return (
 		<Sidebar>
+			{!!headerComponent && headerEnabled ? (
+				<SidebarHeader {...headerProps}>{headerComponent}</SidebarHeader>
+			) : null}
 			<SidebarContent>
 				<SidebarGroup>
 					<SidebarGroupLabel>Admin Dashboard</SidebarGroupLabel>
@@ -71,7 +91,7 @@ export const AppSidebar = () => {
 																className="data-[state=open]:rotate-90"
 																aria-label="Toggle"
 															>
-																<ChevronRight />
+																<icons.ChevronRight />
 															</SidebarMenuAction>
 														</CollapsibleTrigger>
 														<CollapsibleContent>

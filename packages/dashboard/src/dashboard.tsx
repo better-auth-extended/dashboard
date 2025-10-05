@@ -77,10 +77,23 @@ export type DashboardProps = {
 		session: Session & Record<string, any>;
 		user: User & Record<string, any>;
 	} | null;
+	sidebar?: {
+		header?: Omit<
+			React.ComponentProps<Components["SidebarHeader"]>,
+			"children"
+		> & {
+			enabled?: boolean;
+			component?: React.ReactNode;
+		};
+	};
 };
 
 export const Dashboard = memo(
-	<O extends DashboardProps>({ slugs, session: prefetchedSession }: O) => {
+	<O extends DashboardProps>({
+		slugs,
+		session: prefetchedSession,
+		sidebar,
+	}: O) => {
 		const { authClient, source } = useDashboard();
 		// TODO: Skip initial fetch when prefetchedSession is provided?
 		const session = authClient.useSession().data ?? prefetchedSession;
@@ -119,7 +132,7 @@ export const Dashboard = memo(
 					session: session!,
 				}}
 			>
-				<DashboardUI page={page} />
+				<DashboardUI page={page} sidebar={sidebar} />
 			</DashboardPageContext.Provider>
 		);
 	},
