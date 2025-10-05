@@ -1,12 +1,16 @@
 import type { TranslatableString } from "../source";
 import type { Components } from "./components";
+import type { Icons } from "./icons";
 
 type LiteralString = "" | (string & Record<never, never>);
 
-export type PageComponent = (props: {
+export type PageComponentProps = {
+	icons: Icons;
 	components: Components;
 	page: PluginPage;
-}) => React.JSX.Element;
+};
+
+export type PageComponent = (props: PageComponentProps) => React.JSX.Element;
 
 export type PluginPage = (
 	| {

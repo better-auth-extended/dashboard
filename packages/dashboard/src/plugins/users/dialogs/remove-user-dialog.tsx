@@ -4,6 +4,7 @@ import type { UserWithRole } from "better-auth/plugins/admin";
 import type { SharedDialogProps } from "../../../types/helper";
 import { useDashboard } from "../../../dashboard";
 import { useTransition } from "react";
+import { LoaderIcon } from "../../../ui/loader-icon";
 
 export type RemoveUserDialogProps = SharedDialogProps & {
 	currentRow: UserWithRole;
@@ -17,7 +18,6 @@ export const RemoveUserDialog = ({
 	const {
 		t,
 		authClient,
-		icons: { LoaderCircle },
 		components: {
 			Dialog,
 			DialogContent,
@@ -67,9 +67,7 @@ export const RemoveUserDialog = ({
 						onClick={handleSubmit}
 						disabled={loading}
 					>
-						{loading && (
-							<LoaderCircle className="animate-spin repeat-infinite" />
-						)}
+						{loading && <LoaderIcon />}
 						{t("users.dialogs.removeUser.remove")}
 					</Button>
 					<DialogClose asChild>

@@ -9,7 +9,7 @@ import type { PluginPage } from "../types";
 import { LanguageSwitch } from "./language-switch";
 
 const RenderPage = memo(({ page }: { page: PluginPage | null }) => {
-	const { components, source, translate } = useDashboard();
+	const { t, components, icons, source, translate } = useDashboard();
 	if (!page) {
 		return null;
 	}
@@ -71,8 +71,8 @@ const RenderPage = memo(({ page }: { page: PluginPage | null }) => {
 					<LanguageSwitch />
 				</div>
 			</header>
-			<Suspense fallback={<p>Loading...</p>}>
-				<Component page={page} components={components} />
+			<Suspense fallback={<p>{t("ui.state.loading.aria-label")}</p>}>
+				<Component page={page} components={components} icons={icons} />
 			</Suspense>
 		</SidebarInset>
 	);

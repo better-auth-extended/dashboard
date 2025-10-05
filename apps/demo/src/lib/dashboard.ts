@@ -17,6 +17,11 @@ export const source = createSource({
 			icon: "\uD83C\uDDE9\uD83C\uDDEA",
 			translations: {
 				"ui.signOut": "Abmelden",
+				"ui.passwordInput.toggleVisibility.hide.aria-label":
+					"Passwort verstecken",
+				"ui.passwordInput.toggleVisibility.show.aria-label":
+					"Passwort anzeigen",
+				"ui.state.loading.aria-label": "Laden...",
 				"ui.languageSwitch.aria-label": "Sprache ändern",
 				"ui.languageSwitch.noResults": "Keine Resultate",
 				"ui.languageSwitch.placeholder": "Sprache suchen...",
@@ -139,6 +144,21 @@ export const source = createSource({
 					`Du bist dabei, dich als ${vars.name} (${vars.email}) anzumelden. Alle Aktionen, die du ausführst, werden so angezeigt, als kämen sie von diesem Benutzer. Vorsicht beim Fortfahren.`,
 				"users.dialogs.impersonateUser.impersonate": "Anmelden",
 				"users.dialogs.impersonateUser.cancel": "Abbrechen",
+				"users.dialogs.createUser.trigger": "Benutzer erstellen",
+				"users.dialogs.createUser.title": "Benutzer erstellen",
+				"users.dialogs.createUser.description":
+					"Gib die Daten für einen neuen Benutzer ein.",
+				"users.dialogs.createUser.fields.name.label": "Name",
+				"users.dialogs.createUser.fields.name.placeholder": "Name",
+				"users.dialogs.createUser.fields.email.label": "E-Mail",
+				"users.dialogs.createUser.fields.email.placeholder": "E-Mail",
+				"users.dialogs.createUser.fields.password.label": "Passwort",
+				"users.dialogs.createUser.fields.password.placeholder": "Passwort",
+				"users.dialogs.createUser.fields.role.label": "Rolle",
+				"users.dialogs.createUser.fields.role.placeholder": "Rolle wählen",
+				"users.dialogs.createUser.fields.role.noResults": "Keine Resultate",
+				"users.dialogs.createUser.create": "Benutzer erstellen",
+				"users.dialogs.createUser.cancel": "Abbrechen",
 				roleName: (vars) => {
 					const role = `${vars.role}`;
 					if (role === "user") {

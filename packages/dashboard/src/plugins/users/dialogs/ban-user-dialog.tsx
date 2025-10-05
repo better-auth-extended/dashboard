@@ -16,12 +16,12 @@ import {
 import { toSeconds } from "../../../utils/time";
 import { useEffect, useRef, useState, useTransition } from "react";
 import { NumericInput } from "../../../ui/numeric-input";
+import { LoaderIcon } from "../../../ui/loader-icon";
 
 const BanUserContent = ({ onOpenChange, currentRow }: BanUserDialogProps) => {
 	const {
 		t,
 		authClient,
-		icons: { LoaderCircle },
 		components: {
 			DialogHeader,
 			DialogTitle,
@@ -261,9 +261,7 @@ const BanUserContent = ({ onOpenChange, currentRow }: BanUserDialogProps) => {
 								form.formState.isSubmitting
 							}
 						>
-							{form.formState.isSubmitting && (
-								<LoaderCircle className="animate-spin repeat-infinite" />
-							)}
+							{form.formState.isSubmitting && <LoaderIcon />}
 							{t("users.dialogs.banUser.ban")}
 						</Button>
 						<DialogClose asChild>
@@ -283,7 +281,6 @@ const UnbanUserContent = ({ currentRow, onOpenChange }: BanUserDialogProps) => {
 	const {
 		t,
 		authClient,
-		icons: { LoaderCircle },
 		components: {
 			DialogHeader,
 			DialogTitle,
@@ -330,7 +327,7 @@ const UnbanUserContent = ({ currentRow, onOpenChange }: BanUserDialogProps) => {
 					disabled={loading}
 					className="w-full order-1"
 				>
-					{loading && <LoaderCircle className="animate-spin repeat-infinite" />}
+					{loading && <LoaderIcon />}
 					{t("users.dialogs.unbanUser.unban")}
 				</Button>
 				<DialogClose asChild>

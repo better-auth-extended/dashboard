@@ -2,6 +2,7 @@
 
 import { useUsers } from "../users-provider";
 import { BanUserDialog } from "./ban-user-dialog";
+import { CreateUserDialog } from "./create-user-dialog";
 import { EditUserDialog } from "./edit-user-dialog";
 import { ImpersonateUserDialog } from "./impersonate-user-dialog";
 import { RemoveUserDialog } from "./remove-user-dialog";
@@ -17,6 +18,13 @@ export const UsersDialogs = () => {
 
 	return (
 		<>
+			<CreateUserDialog
+				open={open === "create"}
+				onOpenChange={() => {
+					setOpen("create");
+				}}
+			/>
+
 			{currentRow && (
 				<>
 					<EditUserDialog

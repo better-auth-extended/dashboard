@@ -25,11 +25,13 @@ import { createContext } from "../../../utils/create-context";
 import { getCroppedImg, type Area } from "../../../utils/cropper";
 import { cn } from "../../../utils/cn";
 import { UserImage } from "../../../ui/user-image";
+import { LoaderIcon } from "../../../ui/loader-icon";
+import { MultiSelect, type Option } from "../../../ui/multiselect";
 
 const editUserSchema = z.object({
 	image: z.union([z.url(), z.base64url()]),
 	name: z.string().min(2).max(128),
-	role: z.string(),
+	role: z.string().array(),
 	email: z.email(),
 });
 
@@ -68,7 +70,7 @@ const EditUserContent = ({
 	const {
 		source,
 		t,
-		icons: { LoaderCircle, X, Upload },
+		icons: { X, Upload },
 		components: {
 			DialogHeader,
 			DialogTitle,
@@ -190,61 +192,24 @@ const EditUserContent = ({
 							)}
 						</FormField>
 
-						<div className="flex items-start gap-x-2">
-							<FormField control={form.control} name="name">
-								{({ field }) => (
-									<FormItem className="flex-1">
-										<FormLabel>
-											{t("users.dialogs.editUser.fields.name.label")}
-										</FormLabel>
-										<FormControl>
-											<Input
-												placeholder={t(
-													"users.dialogs.editUser.fields.name.placeholder",
-												)}
-												{...field}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							</FormField>
-
-							<FormField control={form.control} name="role">
-								{({ field }) => (
-									<FormItem>
-										<FormLabel>
-											{t("users.dialogs.editUser.fields.role.label")}
-										</FormLabel>
-										<Select
-											name={field.name}
-											onValueChange={field.onChange}
-											defaultValue={field.value}
-										>
-											<FormControl>
-												<SelectTrigger>
-													<SelectValue
-														placeholder={t(
-															"users.dialogs.editUser.fields.role.placeholder",
-														)}
-													/>
-												</SelectTrigger>
-											</FormControl>
-											<SelectContent>
-												{Object.entries(source.roles)
-													.sort(sortAdminRolesFn())
-													.map(([role, config]) => (
-														<SelectItem key={role} value={role}>
-															{config.icon && <config.icon />}
-															{t("roleName", { role })}
-														</SelectItem>
-													))}
-											</SelectContent>
-										</Select>
-									</FormItem>
-								)}
-							</FormField>
-						</div>
+						<FormField control={form.control} name="name">
+							{({ field }) => (
+								<FormItem className="flex-1">
+									<FormLabel>
+										{t("users.dialogs.editUser.fields.name.label")}
+									</FormLabel>
+									<FormControl>
+										<Input
+											placeholder={t(
+												"users.dialogs.editUser.fields.name.placeholder",
+											)}
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						</FormField>
 
 						<FormField control={form.control} name="email">
 							{({ field }) => (
@@ -264,27 +229,87 @@ const EditUserContent = ({
 								</FormItem>
 							)}
 						</FormField>
+
+						<FormField control={form.control} name="role">
+							{({ field }) => {
+								const options = Object.entries(source.roles)
+									.sort(sortAdminRolesFn())
+									.map(([role, config]) => {
+										// TODO: icons
+										return {
+											label: t("roleName", { role }),
+											value: role,
+										} satisfies Option;
+									});
+
+								const defaultValue = options.find(
+									({ value }) => value === field.value?.[0],
+								);
+
+								const [value, setValue] = useState<Option[]>(
+									defaultValue ? [defaultValue] : [],
+								);
+
+								useEffect(() => {
+									field.onChange(value.map(({ value }) => value));
+								}, [value]);
+
+								return (
+									<FormItem>
+										<FormLabel>
+											{t("users.dialogs.editUser.fields.role.label")}
+										</FormLabel>
+										<FormControl>
+											<MultiSelect
+												ref={field.ref}
+												inputProps={{
+													...field,
+												}}
+												commandProps={{
+													label: t(
+														"users.dialogs.editUser.fields.role.placeholder",
+													),
+												}}
+												value={value}
+												onChange={setValue}
+												defaultOptions={options}
+												placeholder={t(
+													"users.dialogs.editUser.fields.role.placeholder",
+												)}
+												hideClearAllButton
+												hidePlaceholderWhenSelected
+												emptyIndicator={
+													<p className="text-center text-sm">
+														{t("users.dialogs.editUser.fields.role.noResults")}
+													</p>
+												}
+											/>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								);
+							}}
+						</FormField>
 					</div>
 
-					<DialogFooter>
-						<DialogClose asChild>
-							<Button type="button" variant="secondary">
-								{t("users.dialogs.editUser.cancel")}
-							</Button>
-						</DialogClose>
+					<DialogFooter className="grid grid-cols-2 gap-3">
 						<Button
 							type="submit"
+							className="w-full order-1"
 							disabled={
 								!form.formState.isDirty ||
 								!form.formState.isValid ||
 								form.formState.isSubmitting
 							}
 						>
-							{form.formState.isSubmitting && (
-								<LoaderCircle className="animate-spin repeat-infinite" />
-							)}
+							{form.formState.isSubmitting && <LoaderIcon />}
 							{t("users.dialogs.editUser.save")}
 						</Button>
+						<DialogClose asChild>
+							<Button type="button" variant="secondary" className="w-full">
+								{t("users.dialogs.editUser.cancel")}
+							</Button>
+						</DialogClose>
 					</DialogFooter>
 				</form>
 			</Form>
@@ -512,7 +537,7 @@ export const EditUserDialog = ({
 			image: currentRow.image ?? "",
 			email: currentRow.email,
 			name: currentRow.name,
-			role: currentRow.role,
+			role: currentRow.role?.split(",") ?? [],
 		},
 		onSubmit: async (values) => {
 			const hasEmailChanged = values.email !== currentRow.email;
@@ -580,7 +605,7 @@ export const EditUserDialog = ({
 					onOpenAutoFocus={(e) => e.preventDefault()}
 					showCloseButton={tab !== "cropper"}
 					className={cn(
-						"sm:max-w-140 p-0 focus:outline-none",
+						"sm:max-w-md p-0 focus:outline-none",
 						tab === "cropper" && "gap-0",
 					)}
 				>

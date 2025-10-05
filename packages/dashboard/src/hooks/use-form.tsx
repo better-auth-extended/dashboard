@@ -279,3 +279,43 @@ export function useForm<T extends Record<string, any>>({
 		validate,
 	};
 }
+
+export type UseArrayFieldResult<T> = {
+	fields: T[];
+	append: (item: T) => void;
+	remove: (index: number) => void;
+	insert: (index: number, item: T) => void;
+	move: (from: number, to: number) => void;
+	update: (index: number, item: T) => void;
+};
+
+export function useArrayField<
+	T extends Record<string, any>,
+	N extends keyof T & string,
+>(
+	form: {
+		control: UseFormResult<T>["control"];
+	},
+	name: N,
+): UseArrayFieldResult<T[N] extends Array<infer U> ? U : never> {
+	const fields = (form.control.getValue(name) ?? []) as any[];
+	const setFields = (newArray: any) => form.control.setValue(name, newArray);
+
+	return {
+		fields,
+		append: (item) => setFields([...fields, item]),
+		remove: (index) => setFields(fields.filter((_, i) => i !== index)),
+		insert: (index, item) => setFields([...fields].splice(index, 0, item)),
+		move: (from, to) => {
+			const array = [...fields];
+			const [item] = array.splice(from, 1);
+			array.splice(to, 0, item);
+			setFields(array);
+		},
+		update: (index, item) => {
+			const array = [...fields];
+			array[index] = item;
+			setFields(array);
+		},
+	};
+}

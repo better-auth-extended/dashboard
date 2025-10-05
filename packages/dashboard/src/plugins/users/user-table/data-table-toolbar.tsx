@@ -6,16 +6,15 @@ import type { UserWithRole } from "better-auth/plugins/admin";
 import { DataTableFacetedFilter } from "./data-table-faceted-filter";
 import { DataTableViewOptions } from "./data-table-view-options";
 import { sortAdminRolesFn } from "../../../utils/sort-admin-roles";
+import { useUsers } from "../users-provider";
+import { LoaderIcon } from "../../../ui/loader-icon";
 
 export type DataTableToolbarProps = {
 	table: Table<UserWithRole>;
-	onSearch?: (value: string) => void;
 };
 
-export const DataTableToolbar = ({
-	table,
-	onSearch,
-}: DataTableToolbarProps) => {
+export const DataTableToolbar = ({ table }: DataTableToolbarProps) => {
+	const { loading } = useUsers();
 	const { components, icons, source, t } = useDashboard();
 	const { Input, Button } = components;
 	const { X, Tag, ListFilter } = icons;
@@ -34,7 +33,11 @@ export const DataTableToolbar = ({
 						className="peer ps-9 h-8"
 					/>
 					<div className="text-muted-foreground/80 pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 peer-disabled:opacity-50">
-						<ListFilter className="size-4" aria-hidden="true" />
+						{loading ? (
+							<LoaderIcon />
+						) : (
+							<ListFilter className="size-4" aria-hidden="true" />
+						)}
 					</div>
 				</div>
 				{table.getColumn("role") && (

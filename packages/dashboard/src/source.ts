@@ -56,6 +56,9 @@ const defaultTranslations = {
 	"ui.languageSwitch.noResults": "No results",
 	"ui.languageSwitch.placeholder": "Language",
 	"ui.openMenu.aria-label": "Open menu",
+	"ui.passwordInput.toggleVisibility.hide.aria-label": "Hide password",
+	"ui.passwordInput.toggleVisibility.show.aria-label": "Show password",
+	"ui.state.loading.aria-label": "Loading...",
 	"home.title": "Home",
 	"home.welcome": "Welcome to the dashboard",
 } as const satisfies PluginTranslations;
