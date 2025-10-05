@@ -1,8 +1,8 @@
 "use client";
 
 import type { Column } from "@tanstack/react-table";
-import { useDashboard } from "../../../dashboard";
-import { cn } from "../../../utils/cn";
+import { useDashboard } from "../../dashboard";
+import { cn } from "../../utils/cn";
 
 export type DataTableFacetedFilterProps<TData, TValue> = {
 	column?: Column<TData, TValue>;
@@ -53,7 +53,7 @@ export const DataTableFacetedFilter = <TData, TValue>({
 							<div className="hidden space-x-1 lg:flex">
 								{selectedValues.size > 2 ? (
 									<Badge variant="secondary" className="px-1 rounded-sm">
-										{t("users.table.toolbar.facetedFilter.selected", {
+										{t("ui.dataTable.facetedFilter.selected", {
 											size: selectedValues.size,
 										})}
 									</Badge>
@@ -80,7 +80,7 @@ export const DataTableFacetedFilter = <TData, TValue>({
 					<CommandInput placeholder={title} />
 					<CommandList>
 						<CommandEmpty>
-							{t("users.table.toolbar.facetedFilter.noResults")}
+							{t("ui.dataTable.facetedFilter.noResults")}
 						</CommandEmpty>
 						<CommandGroup>
 							{options.map((option) => {
@@ -122,9 +122,11 @@ export const DataTableFacetedFilter = <TData, TValue>({
 							<>
 								<CommandSeparator />
 								<CommandGroup>
-									<CommandItem onSelect={() => column?.setFilterValue(undefined)}
-									className="justify-center text-center">
-										{t("users.table.toolbar.facetedFilter.clear")}
+									<CommandItem
+										onSelect={() => column?.setFilterValue(undefined)}
+										className="justify-center text-center"
+									>
+										{t("ui.dataTable.facetedFilter.clear")}
 									</CommandItem>
 								</CommandGroup>
 							</>

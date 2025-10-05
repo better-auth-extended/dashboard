@@ -29,6 +29,27 @@ export const source = createSource({
 					`Erstelle "${vars.inputValue}"`,
 				"ui.multiselect.remove.aria-label": "Entfernen",
 				"ui.multiselect.clearAll.aria-label": "Alle entfernen",
+				"ui.dataTable.noResults": "Keine Resultate",
+				"ui.dataTable.toolbar.view": "Ansicht",
+				"ui.dataTable.toolbar.view.label": "Spalten ein-/ausblenden",
+				"ui.dataTable.toolbar.reset": "Zurücksetzen",
+				"ui.dataTable.facetedFilter.selected": (vars) =>
+					`${vars.size} ausgewählt`,
+				"ui.dataTable.facetedFilter.noResults": "Keine Resultate",
+				"ui.dataTable.facetedFilter.clear": "Zurücksetzen",
+				"ui.dataTable.pagination.itemsPerPage": "Reihen pro Seite",
+				"ui.dataTable.pagination.pageIndicator": (vars) =>
+					`Seite ${vars.currentPage} von ${vars.totalPages}`,
+				"ui.dataTable.pagination.goToFirstPage.aria-label":
+					"Gehe zur ersten Seite",
+				"ui.dataTable.pagination.goToPreviousPage.aria-label":
+					"Gehe zur vorherigen Seite",
+				"ui.dataTable.pagination.goToPage.aria-label": (vars) =>
+					`Gehe zu Seite ${vars.pageNumber}`,
+				"ui.dataTable.pagination.goToNextPage.aria-label":
+					"Gehe zur nächsten Seite",
+				"ui.dataTable.pagination.goToLastPage.aria-label":
+					"Gehe zur letzten Seite",
 				"home.title": "Übersicht",
 				"home.welcome": "Willkommen im Dashboard",
 				"users.title": "Benutzer",
@@ -42,15 +63,8 @@ export const source = createSource({
 				"users.description":
 					"Cillum proident et elit cupidatat sunt cillum ad esse elit.",
 				"ui.openMenu.aria-label": "Menü öffnen",
-				"users.table.toolbar.facetedFilter.noResults": "Keine Resultate",
-				"users.table.toolbar.facetedFilter.clear": "Zurücksetzen",
-				"users.table.toolbar.facetedFilter.selected": (vars) =>
-					`${vars.size} ausgewählt`,
 				"users.table.toolbar.facetedFilter.role.label": "Rolle",
 				"users.table.toolbar.search": "Benutzer filtern...",
-				"users.table.toolbar.reset": "Zurücksetzen",
-				"users.table.toolbar.view": "Ansicht",
-				"users.table.toolbar.view.label": "Spalten ein-/ausblenden",
 				"users.table.actions.edit": "Bearbeiten",
 				"users.table.actions.impersonate": "Als Benutzer anmelden",
 				"users.table.actions.ban": "Sperren",
@@ -60,19 +74,6 @@ export const source = createSource({
 				"users.table.actions.changeRole.placeholder": "Rolle",
 				"users.table.actions.changeRole.noResults": "Keine Resultate",
 				"users.table.actions.revokeSessions": "Sitzungen beenden",
-				"users.table.pagination.itemsPerPage": "Reihen pro Seite",
-				"users.table.pagination.pageIndicator": (vars) =>
-					`Seite ${vars.currentPage} von ${vars.totalPages}`,
-				"users.table.pagination.goToFirstPage.aria-label":
-					"Gehe zur ersten Seite",
-				"users.table.pagination.goToPreviousPage.aria-label":
-					"Gehe zur vorherigen Seite",
-				"users.table.pagination.goToPage.aria-label": (vars) =>
-					`Gehe zu Seite ${vars.pageNumber}`,
-				"users.table.pagination.goToNextPage.aria-label":
-					"Gehe zur nächsten Seite",
-				"users.table.pagination.goToLastPage.aria-label":
-					"Gehe zur letzten Seite",
 				"users.dialogs.editUser.title": "Benutzer bearbeiten",
 				"users.dialogs.editUser.description": "Benutzerdetails bearbeiten",
 				"users.dialogs.editUser.fields.image.changeImage": "Bild ändern",

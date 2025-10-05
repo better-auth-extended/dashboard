@@ -65,6 +65,30 @@ const defaultTranslations = {
 	},
 	"ui.multiselect.remove.aria-label": "Remove",
 	"ui.multiselect.clearAll.aria-label": "Clear all",
+	"ui.dataTable.toolbar.view": "View",
+	"ui.dataTable.toolbar.view.label": "Toggle columns",
+	"ui.dataTable.toolbar.reset": "Reset",
+	"ui.dataTable.facetedFilter.selected": {
+		vars: ["size"],
+		fallbackValue: ({ size }) => `${size} selected`,
+	},
+	"ui.dataTable.facetedFilter.noResults": "No results",
+	"ui.dataTable.facetedFilter.clear": "Clear filters",
+	"ui.dataTable.noResults": "No results",
+	"ui.dataTable.pagination.itemsPerPage": "Items per page",
+	"ui.dataTable.pagination.pageIndicator": {
+		vars: ["currentPage", "totalPages"],
+		fallbackValue: ({ currentPage, totalPages }) =>
+			`Page ${currentPage} of ${totalPages}`,
+	},
+	"ui.dataTable.pagination.goToFirstPage.aria-label": "Go to first page",
+	"ui.dataTable.pagination.goToPreviousPage.aria-label": "Go to previous page",
+	"ui.dataTable.pagination.goToPage.aria-label": {
+		vars: ["pageNumber"],
+		fallbackValue: ({ pageNumber }) => `Go to page ${pageNumber}`,
+	},
+	"ui.dataTable.pagination.goToNextPage.aria-label": "Go to next page",
+	"ui.dataTable.pagination.goToLastPage.aria-label": "Go to last page",
 	"home.title": "Home",
 	"home.welcome": "Welcome to the dashboard",
 } as const satisfies PluginTranslations;

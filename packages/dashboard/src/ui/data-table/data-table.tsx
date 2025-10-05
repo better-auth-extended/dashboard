@@ -1,17 +1,25 @@
 "use client";
 
 import { flexRender, type Table } from "@tanstack/react-table";
-import { useDashboard } from "../../../dashboard";
+import { useDashboard } from "../../dashboard";
 
 export type DataTableProps<TData> = {
 	table: Table<TData>;
 };
 
 export const DataTable = <TData,>({ table }: DataTableProps<TData>) => {
-	const { components, icons } = useDashboard();
-	const { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } =
-		components;
-	const { ChevronDown, ChevronUp } = icons;
+	const {
+		t,
+		icons: { ChevronDown, ChevronUp },
+		components: {
+			Table,
+			TableBody,
+			TableCell,
+			TableHead,
+			TableHeader,
+			TableRow,
+		},
+	} = useDashboard();
 	const columns = table._getColumnDefs();
 
 	return (
@@ -95,7 +103,7 @@ export const DataTable = <TData,>({ table }: DataTableProps<TData>) => {
 					) : (
 						<TableRow>
 							<TableCell colSpan={columns.length} className="h-24 text-center">
-								No results.
+								{t("ui.dataTable.noResults")}
 							</TableCell>
 						</TableRow>
 					)}

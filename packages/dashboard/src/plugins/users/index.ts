@@ -26,16 +26,7 @@ export const users = () => {
 			"users.table.colName.role": "Role",
 			"users.table.colName.createdAt": "Created At",
 			"users.table.toolbar.facetedFilter.role.label": "Role",
-			"users.table.toolbar.facetedFilter.selected": {
-				vars: ["size"],
-				fallbackValue: ({ size }) => `${size} selected`,
-			},
-			"users.table.toolbar.facetedFilter.noResults": "No results",
-			"users.table.toolbar.facetedFilter.clear": "Clear filters",
 			"users.table.toolbar.search": "Filter users...",
-			"users.table.toolbar.reset": "Reset",
-			"users.table.toolbar.view": "View",
-			"users.table.toolbar.view.label": "Toggle columns",
 			"users.table.actions.edit": "Edit",
 			"users.table.actions.impersonate": "Impersonate",
 			"users.table.actions.ban": "Ban",
@@ -45,21 +36,6 @@ export const users = () => {
 			"users.table.actions.changeRole.placeholder": "Role",
 			"users.table.actions.changeRole.noResults": "No results",
 			"users.table.actions.revokeSessions": "Revoke Sessions",
-			"users.table.pagination.itemsPerPage": "Items per page",
-			"users.table.pagination.pageIndicator": {
-				vars: ["currentPage", "totalPages"],
-				fallbackValue: ({ currentPage, totalPages }) =>
-					`Page ${currentPage} of ${totalPages}`,
-			},
-			"users.table.pagination.goToFirstPage.aria-label": "Go to first page",
-			"users.table.pagination.goToPreviousPage.aria-label":
-				"Go to previous page",
-			"users.table.pagination.goToPage.aria-label": {
-				vars: ["pageNumber"],
-				fallbackValue: ({ pageNumber }) => `Go to page ${pageNumber}`,
-			},
-			"users.table.pagination.goToNextPage.aria-label": "Go to next page",
-			"users.table.pagination.goToLastPage.aria-label": "Go to last page",
 			"users.dialogs.editUser.title": "Edit User",
 			"users.dialogs.editUser.description": "Edit the user details",
 			"users.dialogs.editUser.fields.image.label": "Avatar",

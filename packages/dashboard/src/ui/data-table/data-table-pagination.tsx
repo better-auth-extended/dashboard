@@ -1,9 +1,9 @@
 "use client";
 
 import type { Table } from "@tanstack/react-table";
-import { cn } from "../../../utils/cn";
-import { getPageNumbers } from "../../../utils/get-page-numbers";
-import { useDashboard } from "../../../dashboard";
+import { cn } from "../../utils/cn";
+import { getPageNumbers } from "../../utils/get-page-numbers";
+import { useDashboard } from "../../dashboard";
 
 export type DataTablePaginationProps<TData> = {
 	table: Table<TData>;
@@ -38,7 +38,7 @@ export const DataTablePagination = <TData,>({
 		>
 			<div className="flex w-full items-center">
 				<div className="flex w-[100px] items-center justify-center text-sm font-medium @3xl/content:hidden">
-					{t("users.table.pagination.pageIndicator", {
+					{t("ui.dataTable.pagination.pageIndicator", {
 						currentPage,
 						totalPages,
 					})}
@@ -62,14 +62,14 @@ export const DataTablePagination = <TData,>({
 						</SelectContent>
 					</Select>
 					<p className="hidden text-sm font-medium sm:block">
-						{t("users.table.pagination.itemsPerPage")}
+						{t("ui.dataTable.pagination.itemsPerPage")}
 					</p>
 				</div>
 			</div>
 
 			<div className="flex items-center sm:space-x-6 lg:space-x-8">
 				<div className="flex w-[100px] items-center justify-center text-sm font-medium @max-3xl/content:hidden">
-					{t("users.table.pagination.pageIndicator", {
+					{t("ui.dataTable.pagination.pageIndicator", {
 						currentPage,
 						totalPages,
 					})}
@@ -80,7 +80,7 @@ export const DataTablePagination = <TData,>({
 						className="size-8 p-0 @max-md/content:hidden"
 						onClick={() => table.setPageIndex(0)}
 						disabled={!table.getCanPreviousPage()}
-						aria-label={t("users.table.pagination.goToFirstPage.aria-label")}
+						aria-label={t("ui.dataTable.pagination.goToFirstPage.aria-label")}
 					>
 						<ChevronsLeft className="size-4" />
 					</Button>
@@ -89,7 +89,9 @@ export const DataTablePagination = <TData,>({
 						className="size-8 p-0"
 						onClick={() => table.previousPage()}
 						disabled={!table.getCanPreviousPage()}
-						aria-label={t("users.table.pagination.goToPreviousPage.aria-label")}
+						aria-label={t(
+							"ui.dataTable.pagination.goToPreviousPage.aria-label",
+						)}
 					>
 						<ChevronLeft className="size-4" />
 					</Button>
@@ -104,7 +106,7 @@ export const DataTablePagination = <TData,>({
 									variant={currentPage === pageNumber ? "default" : "outline"}
 									className="h-8 min-w-8 px-2"
 									onClick={() => table.setPageIndex((pageNumber as number) - 1)}
-									aria-label={t("users.table.pagination.goToPage.aria-label", {
+									aria-label={t("ui.dataTable.pagination.goToPage.aria-label", {
 										pageNumber,
 									})}
 								>
@@ -119,7 +121,7 @@ export const DataTablePagination = <TData,>({
 						className="size-8 p-0"
 						onClick={() => table.nextPage()}
 						disabled={!table.getCanNextPage()}
-						aria-label={t("users.table.pagination.goToNextPage.aria-label")}
+						aria-label={t("ui.dataTable.pagination.goToNextPage.aria-label")}
 					>
 						<ChevronRight className="size-4" />
 					</Button>
@@ -128,7 +130,7 @@ export const DataTablePagination = <TData,>({
 						className="size-8 p-0 @max-md/content:hidden"
 						onClick={() => table.setPageIndex(table.getPageCount() - 1)}
 						disabled={!table.getCanNextPage()}
-						aria-label={t("users.table.pagination.goToLastPage.aria-label")}
+						aria-label={t("ui.dataTable.pagination.goToLastPage.aria-label")}
 					>
 						<ChevronsRight className="size-4" />
 					</Button>

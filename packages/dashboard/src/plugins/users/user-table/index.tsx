@@ -7,17 +7,26 @@ import {
 } from "@tanstack/react-table";
 import { columns } from "./columns";
 import { useDashboard, useDashboardPage } from "../../../dashboard";
-import { DataTable } from "./data-table";
-import { DataTableToolbar } from "./data-table-toolbar";
 import { useUsers } from "../users-provider";
-import { DataTablePagination } from "./data-table-pagination";
+import {
+	DataTable,
+	DataTablePagination,
+	DataTableFacetedFilter,
+	DataTableToolbar,
+} from "../../../ui/data-table";
+import { sortAdminRolesFn } from "../../../utils/sort-admin-roles";
 
 export const UserTable = () => {
-	const { components, t } = useDashboard();
+	const {
+		icons: { Tag },
+		components,
+		t,
+		source,
+	} = useDashboard();
 	const { session } = useDashboardPage();
 	const {
+		loading,
 		data,
-		setData,
 		pagination,
 		setPagination,
 		globalFilter,
@@ -55,7 +64,27 @@ export const UserTable = () => {
 
 	return (
 		<div className="space-y-4">
-			<DataTableToolbar table={table} />
+			<DataTableToolbar
+				table={table}
+				isLoading={loading}
+				searchPlaceholder={t("users.table.toolbar.search")}
+			>
+				{table.getColumn("role") && (
+					<DataTableFacetedFilter
+						column={table.getColumn("role")}
+						title={t("users.table.toolbar.facetedFilter.role.label")}
+						options={Object.entries(source.roles)
+							.sort(sortAdminRolesFn())
+							.map(([role, config]) => ({
+								value: role,
+								icon: config.icon ?? Tag,
+								label: t("roleName", {
+									role,
+								}),
+							}))}
+					/>
+				)}
+			</DataTableToolbar>
 			<DataTable table={table} />
 			<DataTablePagination table={table} />
 		</div>
