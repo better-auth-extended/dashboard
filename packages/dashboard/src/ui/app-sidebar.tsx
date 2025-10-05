@@ -49,11 +49,20 @@ export const AppSidebar = () => {
 										(child) => !child.hidden,
 									);
 
+									const Icon = route.icon
+										? typeof route.icon === "string"
+											? icons[route.icon]
+											: route.icon
+										: undefined;
+
 									return (
 										<Collapsible key={i} asChild defaultOpen={defaultOpen}>
 											<SidebarMenuItem>
 												<SidebarMenuButton isActive={isActive} asChild>
-													<Link href={href}>{translate(route.title)}</Link>
+													<Link href={href}>
+														{Icon && <Icon className="size-4" />}
+														<span>{translate(route.title)}</span>
+													</Link>
 												</SidebarMenuButton>
 												{children?.length ? (
 													<>
@@ -71,6 +80,12 @@ export const AppSidebar = () => {
 																	const href = `${basePath}/${subItem.slug.startsWith("/") ? subItem.slug.slice(1) : subItem.slug}`;
 																	const isActive = href === pathname;
 
+																	const Icon = subItem.icon
+																		? typeof subItem.icon === "string"
+																			? icons[subItem.icon]
+																			: subItem.icon
+																		: undefined;
+
 																	return (
 																		<SidebarMenuSubItem key={j}>
 																			<SidebarMenuSubButton
@@ -78,6 +93,7 @@ export const AppSidebar = () => {
 																				asChild
 																			>
 																				<Link href={href}>
+																					{Icon && <Icon className="size-4" />}
 																					<span>
 																						{translate(subItem.title)}
 																					</span>

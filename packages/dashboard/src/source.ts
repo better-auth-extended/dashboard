@@ -297,6 +297,7 @@ export const createSource = <
 	};
 	const routes: PluginPage[] = [
 		{
+			icon: "LayoutDashboard",
 			title: t("home.title" as any, {} as any),
 			slug: "/",
 			component: lazy(() => import("./home")),

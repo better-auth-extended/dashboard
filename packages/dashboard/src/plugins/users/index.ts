@@ -10,6 +10,7 @@ export const users = () => {
 				title: t("users.title"),
 				description: t("users.description"),
 				slug: "users",
+				icon: "Users",
 				component: lazy(() => import("./UsersComponent")),
 			},
 		],

@@ -1,6 +1,6 @@
 import type { TranslatableString } from "../source";
 import type { Components } from "./components";
-import type { Icons } from "./icons";
+import type { IconComponent, Icons } from "./icons";
 
 type LiteralString = "" | (string & Record<never, never>);
 
@@ -26,6 +26,7 @@ export type PluginPage = (
 	title: string | TranslatableString;
 	description?: string | TranslatableString;
 	slug: string;
+	icon?: (keyof Icons & string) | IconComponent;
 	component: React.LazyExoticComponent<PageComponent>;
 };
 

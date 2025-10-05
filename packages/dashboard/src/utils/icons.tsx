@@ -545,4 +545,40 @@ export const defaultIcons = {
 			<path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143M2 2l20 20" />
 		</svg>
 	),
+	Users: (props) => (
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			viewBox="0 0 24 24"
+			width="1em"
+			height="1em"
+			fill="none"
+			stroke="currentColor"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			strokeWidth={2}
+			{...props}
+		>
+			<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M16 3.128a4 4 0 0 1 0 7.744M22 21v-2a4 4 0 0 0-3-3.87" />
+			<circle cx={9} cy={7} r={4} />
+		</svg>
+	),
+	LayoutDashboard: (props) => (
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			viewBox="0 0 24 24"
+			width="1em"
+			height="1em"
+			fill="none"
+			stroke="currentColor"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			strokeWidth={2}
+			{...props}
+		>
+			<rect width={7} height={9} x={3} y={3} rx={1} />
+			<rect width={7} height={5} x={14} y={3} rx={1} />
+			<rect width={7} height={9} x={14} y={12} rx={1} />
+			<rect width={7} height={5} x={3} y={16} rx={1} />
+		</svg>
+	),
 } satisfies Record<string, IconComponent>;
