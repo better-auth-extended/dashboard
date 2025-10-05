@@ -6,6 +6,7 @@ export const users = () => {
 		id: "users",
 		routes: ({ t }) => [
 			{
+				id: "users",
 				title: t("users.title"),
 				description: t("users.description"),
 				slug: "users",
