@@ -1,97 +1,18 @@
 import type { LoaderFunction } from "react-router";
-import type { Plugin, PluginPage, PluginTranslations } from "./types/plugin";
-import { createAuthClient } from "better-auth/react";
+import type { Plugin, PluginPage } from "./types/plugin";
 import type {
-	betterAuth,
 	LiteralString,
 	Session,
 	UnionToIntersection,
 	User,
 } from "better-auth";
 import { groupPages } from "./utils/group-pages";
-import type { adminClient } from "better-auth/client/plugins";
-import type { admin } from "better-auth/plugins/admin";
 import React, { lazy, type ComponentType } from "react";
-import type {
-	dashboardClientPlugin,
-	DashboardPlugin,
-} from "./dashboard-plugin";
 import { defaultIcons } from "./utils/icons";
-
-// TODO: move types
+import type { Auth, AuthClient, NormalizeTranslations } from "./types/helper";
+import { defaultTranslations } from "./translations";
 
 export type Slugs = string | string[] | undefined | null;
-
-type NormalizeTranslations<T extends Plugin["translations"]> = {
-	[K in keyof T]: T[K] extends string
-		? {
-				fallbackValue: string;
-			}
-		: T[K] extends {
-					vars: infer V extends LiteralString[];
-					fallbackValue: infer F extends
-						| string
-						| ((
-								vars: Record<string, string | number | null | undefined>,
-						  ) => string);
-				}
-			? {
-					vars: V;
-					fallbackValue: F;
-				}
-			: never;
-};
-
-const defaultTranslations = {
-	roleName: {
-		vars: ["role"],
-		fallbackValue: ({ role }) => {
-			const value = `${role}`;
-
-			return value.charAt(0).toUpperCase() + value.slice(1);
-		},
-	},
-	"ui.signOut": "Sign out",
-	"ui.languageSwitch.aria-label": "Change language",
-	"ui.languageSwitch.noResults": "No results",
-	"ui.languageSwitch.placeholder": "Language",
-	"ui.openMenu.aria-label": "Open menu",
-	"ui.passwordInput.toggleVisibility.hide.aria-label": "Hide password",
-	"ui.passwordInput.toggleVisibility.show.aria-label": "Show password",
-	"ui.state.loading.aria-label": "Loading...",
-	"ui.multiselect.creatableItem.label": {
-		vars: ["inputValue"],
-		fallbackValue: ({ inputValue }) => `Create "${inputValue}"`,
-	},
-	"ui.multiselect.remove.aria-label": "Remove",
-	"ui.multiselect.clearAll.aria-label": "Clear all",
-	"ui.dataTable.toolbar.view": "View",
-	"ui.dataTable.toolbar.view.label": "Toggle columns",
-	"ui.dataTable.toolbar.reset": "Reset",
-	"ui.dataTable.facetedFilter.selected": {
-		vars: ["size"],
-		fallbackValue: ({ size }) => `${size} selected`,
-	},
-	"ui.dataTable.facetedFilter.noResults": "No results",
-	"ui.dataTable.facetedFilter.clear": "Clear filters",
-	"ui.dataTable.noResults": "No results",
-	"ui.dataTable.pagination.itemsPerPage": "Items per page",
-	"ui.dataTable.pagination.pageIndicator": {
-		vars: ["currentPage", "totalPages"],
-		fallbackValue: ({ currentPage, totalPages }) =>
-			`Page ${currentPage} of ${totalPages}`,
-	},
-	"ui.dataTable.pagination.goToFirstPage.aria-label": "Go to first page",
-	"ui.dataTable.pagination.goToPreviousPage.aria-label": "Go to previous page",
-	"ui.dataTable.pagination.goToPage.aria-label": {
-		vars: ["pageNumber"],
-		fallbackValue: ({ pageNumber }) => `Go to page ${pageNumber}`,
-	},
-	"ui.dataTable.pagination.goToNextPage.aria-label": "Go to next page",
-	"ui.dataTable.pagination.goToLastPage.aria-label": "Go to last page",
-	"home.title": "Home",
-	"home.welcome": "Welcome to the dashboard",
-} as const satisfies PluginTranslations;
 
 type I18nConfig<P extends Plugin[]> = {
 	[lang: string]: {
@@ -129,14 +50,7 @@ export type SourceOptions<P extends Plugin[], T extends I18nConfig<P>> = {
 	 * @default "/dashboard"
 	 */
 	basePath?: string;
-	authClient: ReturnType<
-		typeof createAuthClient<{
-			plugins: [
-				ReturnType<typeof adminClient<any>>,
-				ReturnType<typeof dashboardClientPlugin>,
-			];
-		}>
-	>;
+	authClient: AuthClient;
 	/**
 	 * @default "user"
 	 */
@@ -417,13 +331,7 @@ export const createSource = <
 		roles,
 		adminRoles,
 		// nextjs
-		prefetch: async (
-			auth?: ReturnType<
-				typeof betterAuth<{
-					plugins: [ReturnType<typeof admin<any>>, ReturnType<DashboardPlugin>];
-				}>
-			>,
-		) => {
+		prefetch: async (auth?: Auth) => {
 			const headers = await (await import("next/headers")).headers();
 			const session = auth
 				? await auth.api.getSession({

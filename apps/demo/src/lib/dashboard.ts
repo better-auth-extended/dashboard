@@ -1,10 +1,11 @@
 import { createSource } from "@better-auth-extended/dashboard/source";
 import { users } from "@better-auth-extended/dashboard/plugins/users";
+import { organizations } from "@better-auth-extended/dashboard/plugins/organizations";
 import { authClient } from "@/lib/auth-client";
 
 export const source = createSource({
 	basePath: "/dashboard",
-	plugins: [users()],
+	plugins: [users(), organizations()],
 	authClient,
 	defaultLanguage: "english",
 	i18n: {
@@ -165,6 +166,10 @@ export const source = createSource({
 				"users.dialogs.createUser.create": "Benutzer erstellen",
 				"users.dialogs.createUser.cancel": "Abbrechen",
 				"users.dialogs.editUser.fields.role.noResults": "Keine Resultate",
+				"organizations.title": "Organisationen",
+				// TODO:
+				"organizations.description":
+					"Ad sunt reprehenderit occaecat nostrud amet Lorem dolor ea.",
 				roleName: (vars) => {
 					const role = `${vars.role}`;
 					if (role === "user") {
