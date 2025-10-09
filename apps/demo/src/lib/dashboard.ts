@@ -60,9 +60,8 @@ export const source = createSource({
 				"users.table.colName.createdAt": "Beigetreten am",
 				"users.table.selectAll.aria-description": "Alle auswählen",
 				"users.table.selectRow.aria-description": "Reihe auswählen",
-				// TODO:
 				"users.description":
-					"Cillum proident et elit cupidatat sunt cillum ad esse elit.",
+					"Alle Benutzer Ihrer Anwendung anzeigen und verwalten.",
 				"ui.openMenu.aria-label": "Menü öffnen",
 				"users.table.toolbar.facetedFilter.role.label": "Rolle",
 				"users.table.toolbar.search": "Benutzer filtern...",
