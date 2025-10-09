@@ -7,6 +7,7 @@ import { Link } from "../framework";
 import { getBreadcrumb } from "../utils/get-breadcrumbs";
 import type { PluginPage } from "../types";
 import { LanguageSwitch } from "./language-switch";
+import { ThemeSwitch } from "./theme-switch";
 
 const RenderPage = memo(({ page }: { page: PluginPage | null }) => {
 	const { t, components, icons, source, translate } = useDashboard();
@@ -67,7 +68,8 @@ const RenderPage = memo(({ page }: { page: PluginPage | null }) => {
 					</BreadcrumbList>
 				</Breadcrumb>
 
-				<div className="ms-auto">
+				<div className="ms-auto flex items-center gap-2">
+					<ThemeSwitch />
 					<LanguageSwitch />
 				</div>
 			</header>

@@ -25,7 +25,9 @@ export type DashboardConfig = {
 	icons?: Partial<Icons>;
 	source: Source;
 	children?: React.ReactNode;
-	onLanguageChange?: (value?: string | undefined) => any;
+	onLanguageChange?: (value?: string | undefined) => void;
+	theme?: string;
+	onThemeChange?: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export type DashboardPageContext = {
@@ -59,6 +61,8 @@ export type DashboardContext = {
 		vars?: Record<string, string | number | null | undefined>,
 	) => string;
 	translate: (value: string | TranslatableString) => string;
+	theme?: string;
+	onThemeChange?: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const DashboardContext = createContext<DashboardContext>(
@@ -151,6 +155,8 @@ export const DashboardLayout = memo(
 		source,
 		children,
 		onLanguageChange,
+		theme,
+		onThemeChange,
 	}: Exact<DashboardConfig, O>) => {
 		const [language, setLanguage] = useState<string | undefined>(undefined);
 		const framework = useMemo(() => initFramework(), [initFramework]);
@@ -205,6 +211,8 @@ export const DashboardLayout = memo(
 					setLanguage,
 					t,
 					translate,
+					theme,
+					onThemeChange,
 				}) satisfies DashboardContext,
 			[
 				source.basePath,
@@ -215,6 +223,8 @@ export const DashboardLayout = memo(
 				language,
 				t,
 				translate,
+				theme,
+				onThemeChange,
 			],
 		);
 

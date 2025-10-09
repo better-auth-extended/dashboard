@@ -47,6 +47,10 @@ export const defaultTranslations = {
 	},
 	"ui.dataTable.pagination.goToNextPage.aria-label": "Go to next page",
 	"ui.dataTable.pagination.goToLastPage.aria-label": "Go to last page",
+	"ui.themeSwitch.aria-label": "Switch theme",
+	"ui.themeSwitch.light": "Light",
+	"ui.themeSwitch.dark": "Dark",
+	"ui.themeSwitch.system": "System",
 	"home.title": "Home",
 	"home.welcome": "Welcome to the dashboard",
 } as const satisfies PluginTranslations;
